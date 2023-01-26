@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper,english,oneside]{article}
+
+% Valitse 'input encoding':
+%\usepackage[latin1]{inputenc} % merkistökoodaus, jos ISO-LATIN-1:tä.
+\usepackage[utf8]{inputenc}   % merkistökoodaus, jos käytetään UTF8:a
+% Valitse 'output/font encoding':
+%\usepackage[T1]{fontenc}      % korjaa ääkkösten tavutusta, bittikarttana
+\usepackage{ae,aecompl}       % ed. lis. vektorigrafiikkana bittikartan sijasta
+% Kieli- ja tavutuspaketit:
+\usepackage[english]{babel}
+% Muita paketteja:
+% \usepackage{amsmath}   % matematiikkaa
+\usepackage{url}       % \url{...}
+
+% Kappaleiden erottaminen ja sisennys
+\parskip 1ex
+\parindent 0pt
+\evensidemargin 0mm
+\oddsidemargin 0mm
+\textwidth 159.2mm
+\topmargin 0mm
+\headheight 0mm
+\headsep 0mm
+\textheight 246.2mm
+
+\pagestyle{plain}
+
+% ---------------------------------------------------------------------
+
+\begin{document}
+
+% Otsikkotiedot: muokkaa tähän omat tietosi
+
+\title{TIK.kand research plan:\\[5mm]
+Robotic Motion Planning}
+
+\author{Peik Etzell\\
+Aalto-university\\
+\url{peik.etzell@aalto.fi}}
+
+\date{\today}
+
+\maketitle
+
+% ---------------------------------------------------------------------
+
+\vspace{10mm}
+
+\textbf{Kandidaatintyön nimi:} Robotic motion planning % TODO
+
+\textbf{Työn tekijä:} Peik Etzell
+
+\textbf{Ohjaaja:} Francesco d'Amore
+
+
+\section{Introduction}
+
+Robotic motion planning is a very broad topic, generally centered around planning sequences of moves for making robots move from one point to another, safely and efficiently. 
+
+This bachelors thesis will focus on existing algorithmic research in coordinated multi-robot motion planning, which is often abstracted into simple shapes in two dimensional space, for example unit-radius disks on a planar grid. 
+Optimal solutions for these problems are found to be NP-hard \cite{demaine_coordinated_2019}. NP-hardness means approximation algorithms are justified \cite{demaine_coordinated_2019}, so research is focused on better approximations and faster computation. 
+
+Different problem statements exist for multi-robot motion planning. Robots either move in a grid, or they can move continuously in two-dimensional space. Robots can also be unlabeled, colored or labeled. Unlabeled robots means that the target positions are agnostic in terms of which robot gets there, while with colored robots the target positions want a specific color. Labeled robots have specific target positions for each robot. 
+
+The subject is only a small part of the vast field of robotics, with problems touching on many fields of engineering. With the subject being so closely tied to the real world with physical robots, motion planning itself is not enough to make a robot move effectively. A closely related topic is \emph{inverse and forwards kinematics}, which translate between so-called \emph{joint-space} and the real world, and is essential if the robot motions are more complex than simple linear movements. 
+
+\section{Research objectives}
+
+What are the different problems in coordinated multi-robot motion planning? How does the best current algorithms work? Are they applicable to the real world? What are the limitations, how many robots can feasibly be planned for? Real time or batch processing? 
+
+\section{Material and methods}
+
+This is a theoretical review of existing research, and will not use any physical materials. 
+
+Research papers, textbooks etc. from reputable sources will be used to write this bachelors thesis.
+
+
+\section{Schedule}
+
+\begin{tabular}{|p{50mm}|p{30mm}|p{65mm}|}
+\hline
+Research plan (this)   & 30.1 at 12.00 & Usable introduction
+\\ \hline
+Version 1   & 13.2 at 12.00 & Mostly reading, some text
+\\ \hline
+Peer feedback on V1 & 17.2 at 12.00 & 
+\\ \hline
+Version 2   & 6.3 at 12.00 & Writing well under way
+\\ \hline
+Version 3   & 27.3 at 12.00 & All content written
+\\ \hline
+Written opposition of V3 & 31.3 at 12.00 & 
+\\ \hline
+Version 4   & 17.4 at 12.00 & Final adjustments
+\\ \hline
+Presentations  	& 2.5 --- 5.5 & Presentation specifics
+\\ \hline
+\end{tabular}
+
+
+% ---------------------------------------------------------------------
+%
+% ÄLÄ MUUTA MITÄÄN TÄÄLTÄ LOPUSTA
+
+% Tässä on käytetty siis numeroviittausjärjestelmää. 
+% Toinen hyvin yleinen malli on nimi-vuosi-viittaus.
+
+% \bibliographystyle{plainnat}
+% \bibliographystyle{finplain}  % suomi
+\bibliographystyle{plain}    % englanti
+% Lisää mm. http://amath.colorado.edu/documentation/LaTeX/reference/faq/bibstyles.pdf
+
+% Muutetaan otsikko "Kirjallisuutta" -> "Lähteet"
+\renewcommand{\refname}{References}  % article-tyyppisen
+
+% Määritä bib-tiedoston nimi tähän (eli lahteet.bib ilman bib)
+% \bibliography{lahteet}
+\bibliography{zotero}
+
+% ---------------------------------------------------------------------
+
+\end{document}
