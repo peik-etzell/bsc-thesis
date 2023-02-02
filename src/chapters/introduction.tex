@@ -1,0 +1,18 @@
+\section{Introduction}
+
+Robotic motion planning is a very broad topic, generally centered around planning sequences of moves for making robots move from one point to another, safely and efficiently. 
+
+This bachelors thesis will focus on existing algorithmic research in coordinated multi-robot motion planning.
+Finding an optimal solution for these problems is found to be NP-hard \cite{demaine_coordinated_2019}. NP-hardness implies approximation algorithms are justified \cite{demaine_coordinated_2019}, so research is focused on better approximations and faster computation. 
+
+Different problem statements exist for multi-robot motion planning. Robots, or agents, either move in a grid, or they can move continuously in two-dimensional space. 
+Grids can be modelled with graph theory, such that a node can only be occupied by a single agent at any time. 
+Continuous spaces need to use some kind of geometry to avoid collisions, and thus the agents are often modeled as unit discs in the plane. 
+
+There also exist different variations on the problem in the way that the agents can map onto the targets. In an unlabeled case, the agents are indistinguishable, and all target positions can be occupied by any agent. In a case with colored agents, the target positions each want a specific color of agent. Lastly, in a labeled case, all agents have a unique label and target position, equivalent to each having their own color in a colored case.
+
+The subject is only a small part of the vast field of robotics, with problems touching on many fields of engineering. 
+With the subject being so closely tied to the real world with physical robots, motion planning itself is not enough to make a robot move effectively. 
+A closely related topic is \emph{inverse and forwards kinematics}, which translate between so-called \emph{joint-space} and the real world, and is essential if the robot motions are more complex than simple linear movements. 
+
+
