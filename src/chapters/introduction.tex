@@ -12,14 +12,16 @@
 
 Robotic motion planning is a field of research in theoretical computer science which has been deeply studied. 
 It focuses on designing and studying algorithms for making robots get from one point to another safely (without colliding) and efficiently (depending on the situation, minimizing time, resource usage or similar metrics) \cite{chosetPrinciplesRobotMotion2005}.
+\fda{In the last parentheses, I would just write ``minimizing some properly defined cost function''.}
 
 Robots are modeled in a vast variety of ways, which differ in terms of shapes, sizes and kinematics: 
 some warehouse robots can be modeled to move in two dimensions only, while flying drones can be seen as moving in three dimensions.
 
 Robotic arms that move an end-effector are often modeled in six dimensions: three spatial ones and three for orientation. 
-These often have some so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary.
+These \fda{What is ``these'' here? Not clear.} often have some so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary. \fda{Why is the next sentence linked to the latter?}
 This means that the arm is able to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations. 
 \cite{sicilianoSpringerHandbookRobotics2016}
+\fda{The citation goes before the period.}
 
 There are many different environments in which robots exist. 
 Assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them.
@@ -28,25 +30,26 @@ Some robots need to work together; multi-robot systems can be found in warehouse
 
 The many real world scenarios to be studied led to the formulation of different problems.
 The one we investigate in this thesis is \emph{coordinated multi-robot motion planning:} making robots move effectively without colliding with other moving robots.
-The goal is to move the robots from a starting configuration to a target configuration, 
+The goal is to move the robots from a starting configuration to a target configuration, \fda{It seems something is missing here.}
 
-The problem has multiple variations: 
-In an unlabeled case, we do not care which robot gets to which target position, only that all target positions get occupied. 
+The problem has multiple variations: \fda{after the colon we don't use capital letters I think}
+In an unlabeled case \fda{I would write ``In the unlabeled version of the problem''}, we do not care which robot gets to which target position, only that all target positions get occupied. 
+\fda{You can think of connecting the next sentence in a better way, such as ``If we do care about which robot reaches the target position, we are considering the \emph{labelled} version of the problem.''}
 Otherwise we have a labeled problem, where robots and target positions each have labels, such that target positions contain a robot with the same label at the end. 
-Note that the labels can be unique or not, and some sources distinguish between these cases: for example, \cite{demaineCoordinatedMotionPlanning2019} uses \emph{unlabeled, colored} and \emph{labeled} as variations on the problem, such that labeled signifies unique labels.
+Note that the labels can be unique or not, and some sources \fda{What is a source? If you mean a paper, it is better to say either ``work'' or ``paper''} distinguish between these cases: for example, \cite{demaineCoordinatedMotionPlanning2019} uses \fda{``considers'' is better than ``uses''}\emph{unlabeled, colored} and \emph{labeled} as variations on the problem, such that labeled signifies unique labels \emph{it is better to specify what ``colored'' means: a reader might not know it.}
 
-The problem can also be modeled as continuous or discrete. The discrete variant is often handled using graph theory, while simple shapes like unit radius disks (see \cite{demaineCoordinatedMotionPlanning2019}, \cite{banyassadyUnlabeledMultiRobotMotion2022}) or unit squares (see \cite{yangCoordinatedPathPlanning2022}) are often used in the continuous case. 
+The problem can also be modeled as continuous or discrete \fda{I would say ``modeled both in the continuous or discrete space''}. The discrete variant is often handled using graph theory, while simple shapes like unit radius disks (see \cite{demaineCoordinatedMotionPlanning2019}, \cite{banyassadyUnlabeledMultiRobotMotion2022}) or unit squares (see \cite{yangCoordinatedPathPlanning2022}) are often used in the continuous case. \fda{I think continuois and discrete mean something slightly different: continuous means that you want your robots to move in a ``physical'' environment, often modeled as real Euclidean space. In this case, you have to model a robot as a unit-disk and not a point, as a point has dimension 0; in the discrete space, your ``locations'' are nodes of a graph (and not areas of the cintinuous space!!), hence the robot can be thought as occupying a whole node each time.}
 
-Finding the minimum \emph{makespan} solution to a discrete grid case of the problem is found to be NP-hard by \cite{demaineCoordinatedMotionPlanning2019}.
+Finding the minimum \emph{makespan} \fda{what does makespan mean?} solution to a discrete grid case of the problem is found to be NP-hard by \cite{demaineCoordinatedMotionPlanning2019}.
 NP-hardness implies approximation algorithms are justified \cite{demaineCoordinatedMotionPlanning2019}, so research is focused on better approximations and faster computation. 
 
-\subsection{Thesis Objective}
+\subsection{Thesis Objective}\fda{Either you capitalize each word in each subsection, or you capitalize only the first word: compare with next subsection}
 
 The field of coordinated motion planning for parallel robotics has seen a lot of research in recent years, with different algorithms tackling different problems in the field. 
 The scope is broad and the problems are varied but related. 
-The goal will be to understand and explain current research in the field, what has been done and what is yet to be understood.
+The goal will be \fda{Don't use the future tense here: this IS the goal of the thesis} to understand and explain current research in the field, what has been done and what is yet to be understood.
 
-One of the key objectives will be to compare different algorithms in terms of their performance in computation and execution, strengths, weaknesses and scalability. How many robots can we support in a real system before motion planning becomes too slow? 
+One of the key objectives will be \fda{feels like repetitive words with respect to the previous sentence} to compare different algorithms in terms of their performance in computation and execution, strengths, weaknesses and scalability. How many robots can we support in a real system before motion planning becomes too slow? 
 
 \subsection{Getting in depth}
 
