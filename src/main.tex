@@ -6,17 +6,21 @@
 %% * the third when producing a ps file and a pdf/a from it.
 %%
 \documentclass[english, 12pt, a4paper, sci, utf8, a-1b, online]{aaltothesis}
-%\documentclass[english, 12pt, a4paper, elec, utf8, a-1b]{aaltothesis}
-%\documentclass[english, 12pt, a4paper, elec, dvips, online]{aaltothesis}
 
 \usepackage{graphicx}
 %% Math fonts, symbols, and formatting
 \usepackage{amsfonts,amssymb,amsbsy,amsmath, enumitem}
 \usepackage[parfill]{parskip}
+\usepackage{hyphenat}
+
+\hyphenpenalty=10000
+\tolerance=1000
 
 %% added by advisor
 \usepackage{xcolor}
 \newcommand{\fda}[1]{{\color{red} \textbf{Francesco}: #1}}
+
+\newcommand{\TODO}{{\color{red} \textbf{TODO!} }}
 
 %% THESIS INFO
 \degreeprogram{Computer Science}
@@ -100,15 +104,15 @@ TODO
 \end{abstractpage}
 
 
-%% PREFACE
-%% This section is optional.
-\mysection{Preface}
+% %% PREFACE
+% %% This section is optional.
+% \mysection{Preface}
 
-\vspace{5cm}
-Espoo, \today
+% \vspace{5cm}
+% Espoo, \today
 
-\vspace{5mm}
-{\hfill Peik Etzell \hspace{1cm}}
+% \vspace{5mm}
+% {\hfill Peik Etzell \hspace{1cm}}
 
 \newpage
 
