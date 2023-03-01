@@ -275,3 +275,7 @@ TSWLatexianTemp*
 # Makeindex log files
 *.lpz
 src/main.xmpdata
+
+**.pdf
+src/build
+.vscode
