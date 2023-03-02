@@ -1,57 +1,76 @@
-\section{Introduction}
-
 \subsection{Background}
 
 Robotic motion planning is a field of research in theoretical computer science which has been deeply studied. 
 It focuses on designing and studying algorithms for making robots get from one point to another safely (without colliding) and efficiently (minimizing some properly defined cost function) \cite{chosetPrinciplesRobotMotion2005}.
 
-Robots are modeled in a vast variety of ways, which differ in terms of shapes, sizes and kinematics: 
+Robots are modeled in a vast number of ways, which differ in terms of shapes, sizes and kinematics: 
 some warehouse robots can be modeled to move in two dimensions only, while flying drones can be seen as moving in three dimensions.
 
 Robotic arms that move an end-effector are often modeled in six dimensions: three spatial ones and three for orientation. 
-These robotic arms often have so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary \cite{sicilianoSpringerHandbookRobotics2016}.
-Kinematic redundancy increases the fault-tolerance and dexterity of the robot, and makes it possible to re-adjust while hold the same end-effector pose, but it also increases the complexity in motion planning as poses can have different alternative joint configurations \cite{sicilianoSpringerHandbookRobotics2016}. 
-
-This means that the arm is able to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations \cite{sicilianoSpringerHandbookRobotics2016}.
+These robotic arms often have so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary \cite{robo/ChiaveriniOM16}.
+Kinematic redundancy increases the fault-tolerance and dexterity of the robot, and makes it possible to re-adjust while hold the same end-effector pose, but it also increases the complexity in motion planning as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}. 
+Kinematic redundancy enables the arm to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}.
 
 There are many different environments in which robots exist. 
 Assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them.
 Robotic vacuum cleaners on the other hand need to map their environment and make decisions dynamically, as furniture, people and pets can change places from time to time. 
-Some robots need to work together; multi-robot systems can be found in warehouses \cite{sicilianoSpringerHandbookRobotics2016}, where parallel motion is highly desirable, but past research has focused mostly on algorithms moving robots one-by-one \cite{demaineCoordinatedMotionPlanning2019}.
+Some robots need to work together; multi-robot systems can be found in warehouses \cite{robo/ParkerRS16}, where parallel motion is highly desirable, but past research has focused mostly on algorithms moving robots one-by-one \cite{siamcomp/DemaineFKMS19}.
+
+\subsection{Parallel robots}
+
+The field of coordinated motion planning for parallel robotics has seen a lot of research in recent years, with algorithms tackling different problems in the field. 
 
 The many real world scenarios to be studied led to the formulation of different problems.
-The one we investigate in this thesis is \emph{coordinated multi-robot motion planning:} making robots move effectively without colliding with other moving robots.
-The goal is to move the robots from their starting positions to their target positions.
+% The one we investigate in this thesis is \emph{coordinated multi-robot motion planning:} making robots move effectively without colliding with other moving robots.
+The goal is to move the robots from their starting positions to their target positions without colliding with other robots.
+Without accounting for collisions, finding a solution would of course be trivial, as robots could move straight to their targets.
+There are two different general types of motion problems: finding a collision free path from a starting configuration to a target configuration is called a \emph{motion planning problem}, while determining if such a path exists is called the \emph{mover's problem} \cite{hopcroftReducingMultipleObject1986}. 
 
-The problem has multiple variations:
-in an version of the problem, we do not care which robot gets to which target position, only that all target positions get occupied. 
-In case we want to move specific robots to specific targets, we have a labeled problem, where robots and target positions each have labels, such that target positions contain a robot with the same label at the end. 
-Note that such labels can be unique or not, and some works distinguish between these cases: for example, \cite{demaineCoordinatedMotionPlanning2019} considers \emph{unlabeled, colored} and \emph{labeled} as variations on the problem, such that \emph{labeled} signifies unique labels, and \emph{colored} is a generalization of the unlabeled and labeled variants: multiple robots (and targets) can have the same color, and the targets are only to be matched up with robots of the same color. 
-Thus both the unlabeled and labeled variants can be modeled as specific variants of the colored problem.
+At the end of a correct motion plan, all robots have moved from their starting positions to their target positions, and all target positions are occupied by a robot. \note{is it always 1-1?} 
+
+Some variations to a motion problem exist:
+in a \emph{labeled} formulation, robots are unique, and are assigned specific target locations to move to. 
+This problem formulation is the most studied \cite{fun/BrockenHKLS21}.
+In an \emph{unlabeled} formulation, robots are instead indistinguishable from each other, and targets can be occupied by any robot. 
+In 2014, \cite{soloveyColorMultirobotMotion2014} introduced a generalization of labeled and unlabeled problems: in a \emph{(k-)colored} problem, the robots are partitioned into $k$ colors or groups, and each have to move to a target location with the same coloring. 
+\emph{Labeled} and \emph{unlabeled} are then extremes of the \emph{colored} problem formulation: 
+$k=1$ gives an unlabeled problem, as all robots are of the same color, while $k=n$ gives all robots their own unique color. 
+
+% The problem has multiple variations: \refactor{we}{something else}
+% in the unlabeled formulation of the problem, we do not care which robot gets to which target position, only that all target positions get occupied. 
+% \TODO in the labeled formulation, robots and target positions have labels...
+% In case we want to move specific robots to specific targets, we have a labeled problem, where robots and target positions each have labels, such that target positions contain a robot with the same label at the end. 
+% Note that such labels can be unique or not, and some works distinguish between these cases: for example, \cite{demaineCoordinatedMotionPlanning2019} considers \emph{unlabeled, colored} and \emph{labeled} as variations on the problem, where \emph{labeled} means unique labels, and \emph{colored} is a generalization of the unlabeled and labeled variants: multiple robots (and targets) can have the same color, and the targets are only to be matched up with robots of the same color. \TODO explicit extreme
+% Thus both the unlabeled and labeled formulations can be modeled as specific cases of the colored one.
 
 The problem can also be modeled both in the continuous or discrete space. 
-The discrete variant is often handled using graph theory, with robots occupying nodes and being able to move to neighboring empty nodes at each timestep.
-In a continuous version, robots are modeled as simple shapes, like unit radius disks (see \cite{demaineCoordinatedMotionPlanning2019}, \cite{banyassadyUnlabeledMultiRobotMotion2022}) or unit squares (see \cite{yangCoordinatedPathPlanning2022}). 
+The discrete space is handled using graph theory, with robots occupying nodes and being able to move to neighboring empty nodes at each timestep.
+In the continuous space, robots are modeled as simple shapes,
+like unit radius disks (see \cite{siamcomp/DemaineFKMS19}, \cite{compgeom/BanyassadyBBBFH22}) or unit squares (see \cite{yangCoordinatedPathPlanning2022}), as this makes collision checking a lot simpler. 
+Most continuous space research also study uniform sizes and shapes of robots, but for example \cite{fun/BrockenHKLS21} investigates motion planning of mixed size discs. \note{mixed might be a bad word here}
 % The simple shapes make geometric collision calculations simpler \TODO maybe?
+
+% This thesis will focus on the motion planning problem. 
+
+
 
 \subsection{Thesis objective}
 
-The field of coordinated motion planning for parallel robotics has seen a lot of research in recent years, with different algorithms tackling different problems in the field. 
 The scope is broad and the problems are varied but related. 
-The goal is to understand and explain current research, what has been done and what is yet to be understood. 
-To achieve this we compare current state-of-the-art algorithms in terms of their performance in computation and execution, strengths, weaknesses and scalability. How many robots can we support in a real system before motion planning becomes too slow? 
+The goal is to understand and explain the current research, what has been done and what is yet to be understood. 
+To achieve this, \note{not we} we compare current state-of-the-art algorithms in terms of their performance in computation and execution, strengths, weaknesses and scalability. How many robots can we support in a real system before motion planning becomes too slow? 
+
 
 \subsection{Getting in-depth}
 
 % configuration space, joint space, holonomic, obstacles, PSPACE, polynomial time in terms of what?, 
 
-There are two different general types of motion problems: finding a collision free path from a starting configuration to a target configuration is called a \emph{motion planning problem}, while determining if such a path exists is called the \emph{mover's problem} \cite{hopcroftReducingMultipleObject1986}. 
-This thesis will focus on research on the motion planning problem. 
+\note{move to definition}
 
-\emph{Makespan} is the total time taken by a solution to complete. 
-Finding the minimum makespan solution to a discrete grid variant of the coordinated motion planning problem is found to be NP-hard by \cite{demaineCoordinatedMotionPlanning2019}. \cite{demaineCoordinatedMotionPlanning2019} also conjectures that the continuous problem would be at least as hard, but leaves it for future work. 
-NP-hardness implies approximation algorithms are justified \cite{demaineCoordinatedMotionPlanning2019}, so research is focused on better approximations and faster computation. 
-An easy lower bound on the makespan of a solution is the maximum of any robot's distance from its start to its goal, disregarding other robots \cite{demaineCoordinatedMotionPlanning2019}. 
+\emph{Makespan} of a solution is the total time that the robots move in the solution. 
+Finding the minimum makespan solution to a discrete grid case of the coordinated motion planning problem is found to be NP-hard by \cite{siamcomp/DemaineFKMS19}. \cite{siamcomp/DemaineFKMS19} also conjectures that the continuous formulation of the problem would be at least as hard, but leaves it for future work. 
+NP-hardness implies approximation algorithms are justified \cite{siamcomp/DemaineFKMS19}, so research is focused on better approximations and faster computation. 
+An easy lower bound on the makespan of a solution is the maximum of any robot's distance from its start to its goal, disregarding other robots \cite{siamcomp/DemaineFKMS19}. 
 
 % A core term is a \emph{configuration} and \emph{configuration space}.  
 % A configuration of a system can be modeled as a vector of parameters specifying the state of the system, and it lies in the configuration space of the system. 

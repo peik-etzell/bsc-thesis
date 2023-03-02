@@ -1,0 +1,126 @@
+\section{Preliminaries}
+
+
+\subsection{Some history}
+
+Beginnings in the Pebble problem \cite{focs/KornhauserMS84}, which was for packet routing in possibly congested networks. 
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Spatial models}
+
+%  \TODO say something about spatial models here
+
+% Mostly finite spaces, bounded by a polygon
+
+% Not necessarily 2 dimensional, but most research seems to focus on this case
+
+Real robots are physically three-dimensional objects, but they are mostly restricted to two dimensions in multi-robot applications, like warehouses. 
+Some 
+Current works are also quite focused on the two-dimensional setting. 
+Reasons for this might be ease of visualization and thus understanding, simpler algorithms, real world applicability or something else. 
+
+There are some works exploring higher dimensions: \cite{arobots/TurpinMMK14}
+
+We have a set $R$ of $N$ robots positioned in our model world. \note{expand this} 
+
+
+
+% Most research \cite{} in robotic motion planning has been focused on a discretization of the real world, as this is 
+
+
+\subsubsection{The continuous space}
+
+In a continuous model, the robots can in theory be modeled as close to reality as wanted, but mostly simple shapes are used in motion planning research, and real warehouse robots seem to reflect this in their shapes as well: many are shaped close to circles or squares. \note{insert image here maybe? }
+
+Most current works use unit-radius (or sometimes unit-diameter) discs as models for the robots, as the collision calculations are simple: two circular robots are in collision if the Euclidean distance between their centers is lower than the sum of their radii. 
+The robots move in Euclidean space $\mathbb{R}^2$. 
+
+Some works have also studied unit-square robots. 
+Collision calculations are also simple here if only translation is allowed:
+collisions are avoided by requiring the $L_{\infty}$-norm to be higher than 1 for the centers of any two robots.
+Even if real robots are planned for, it is infeasible to model them in high detail for motion planning purposes. 
+
+The increased computational complexity from collision calculations between more intricate models seems not worth it. % and modern warehouse robots seem to be designed 
+
+If square robots are allowed to rotate, it increases the complexity.
+
+Discs and squares of course assumes a 2-dimensional world, and this is what current research has been focused on. 
+An extension to the third dimension would naturally be spheres or cubes, and $n$-spheres and hypercubes etc. in higher dimensions, but it remains to be seen if higher dimensions have applicability in the real world. \note{has someone posed this question before?} 
+The third spatial dimension also has more space, which reduces the importance of clever motion planning \note{source, proof?}
+
+\subsubsection{The discrete grid model}
+
+In a two-dimensional discrete model, our environment is represented as a grid, where each cell in the grid represents a small area in the environment. 
+The grid is handled using graph theory: it is modeled as a simple, finite, four-connected graph $G$ of edges $E$ and vertices $V$, $G := (E, V)$. 
+In other words, a vertex represents a cell of the grid, and it is connected to its neighboring cells by simple \note{(? is it simple when talking about edges and not graphs ?)} edges.
+The robots are mapped injectively onto the vertices, and can each move to a neighboring vertex, given that that vertex is unoccupied or simultaneously being vacated by another robot. 
+Importantly, robots can not swap places, so an edge may only be used by one robot at a time, and thus if a vertex is simultaneously being vacated by one robot and occupied by another, the robots have to use different edges.
+
+
+
+\subsubsection{The temporal dimension}
+
+The discrete grid has discrete timesteps? (at least \cite{siamcomp/DemaineFKMS19}), continuous not?
+
+
+
+
+
+
+\subsection{Computing models}
+
+\subsubsection{Distributed vs centralized}
+
+As multi-robot systems are inherently physically distributed, a lot of research has studied decentralized robot control algorithms. 
+
+
+\cite{flocchiniDistributedComputingMobile2019} thoroughly describes some standard computational models for multi-robot and multi-agent motion planning. 
+The terms \emph{robot} and \emph{agent} could seem quite interchangeable, but there is a distinction. 
+Robots generally refer to physical or simulated entities moving in continuous space, while agents are not constrained to the physical world. 
+Mobile agents can be used as a more general model that can also model things such as software, viruses, web crawlers etc. \cite{flocchiniDistributedComputingMobile2019} which do not move in Cartesian space. 
+Agents are modeled as moving in a simple, finite, connected graph $G = (V, E)$, where $V$ is the set of vertices, and $E$ is the set of edges \cite{flocchiniDistributedComputingMobile2019}, representing the webpages and hyperlinks respectively, that webcrawlers navigate for example. \TODO infinite graphs, directed / undirected
+% much like webpages and hyperlinks for example. 
+
+Robots are modeled in a connected spatial universe $\mathcal{U} \in \mathbb{R}^d, d \ge 1$ \cite{flocchiniDistributedComputingMobile2019}. \TODO 
+
+
+
+
+\subsection{Colored robots}
+
+\cite{ijrr/SoloveyH14} introduced a generalization of the two previously studied multi-robot motion planning problem variations: \emph{labeled} and \emph{unlabeled}; 
+
+
+
+
+
+\section{Definitions}
+
+There are different objectives to target when seeking the best algorithm to solve a motion planning problem. 
+
+\begin{definition}
+    \emph{Makespan} is the total execution time of a solution. 
+\end{definition}
+
+We find a simple lower bound on the makespan as the maximum time taken by any single robot moving from its start position to its target position, disregarding other robots.  
+
+\begin{definition}
+    \emph{Stretch factor} is the ratio of the length of a solution and the simple lower bound.
+\end{definition}
+
+\begin{remark}
+    The stretch factor is highly similar to the notion of approximation factor of an approximation algorithm. 
+    The important difference is that the stretch factor is comparing the found solution makespan to the simple lower bound, while the approximation factor compares the found solution makespan to the optimal solution makespan. 
+    As the optimal solution makespan is always equal to or greater than the simple lower bound, the stretch factor of a solution will be an upper bound to the approximation factor, i.e. an $\mathcal{O}(1)$ stretch factor implies an $\mathcal{O}(1)$ approximation factor.
+    As the problem of finding an optimal makespan solution is NP-hard, it is \emph{impossible} \TODO
+\end{remark}

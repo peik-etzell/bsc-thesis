@@ -9,18 +9,24 @@
 
 \usepackage{graphicx}
 %% Math fonts, symbols, and formatting
-\usepackage{amsfonts,amssymb,amsbsy,amsmath, enumitem}
+\usepackage{amsfonts,amssymb,amsbsy,amsmath,amsthm,enumitem}
 \usepackage[parfill]{parskip}
 \usepackage{hyphenat}
+% \usepackage[style=ieee]{biblatex}
+% \addbibresource{zotero.bib}
 
 \hyphenpenalty=10000
 \tolerance=1000
 
 %% added by advisor
 \usepackage{xcolor}
+\input{environments.tex}
+
 \newcommand{\fda}[1]{{\color{red} \textbf{Francesco}: #1}}
 
 \newcommand{\TODO}{{\color{red} \textbf{TODO!} }}
+\newcommand{\note}[1]{{\color{purple} \emph{#1} }}
+
 
 %% THESIS INFO
 \degreeprogram{Computer Science}
@@ -94,8 +100,8 @@ TODO
 
 %% SWEDISH ABSTRACT.
 \thesistitle{}
-\supervisor{} 
-\advisor{TODO Swedish title Francesco d'Amore}
+\supervisor{Professor Eero Hyvönen} 
+\advisor{Postdoctoral researcher Francesco d'Amore}
 \degreeprogram{Datateknik}
 \major{Datateknik}
 \keywords{}
@@ -122,13 +128,29 @@ TODO
 
 % \setlength{\parindent}{0}
 
-\include{chapters/introduction.tex}
+\clearpage
+\section{Introduction}
+\input{chapters/introduction.tex}
 
+
+
+% PRELIMINARIES 
+\include{chapters/preliminaries.tex}
+
+
+% PAPERS 
+\include{chapters/main/general_approaches.tex}
+\include{chapters/main/demaine.tex}
+
+% CONCLUSIONS
+\section{Conclusions}
 
 %% REFERENCES
 % \bibliographystyle{aaltosci_t}
 \bibliographystyle{ieeetr}
-\bibliography{zotero}
+\bibliography{zotero,manual_refs}
+% \bibliography{manual_refs}
+% \printbibliography
 
 \clearpage
 
