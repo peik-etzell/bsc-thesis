@@ -9,7 +9,8 @@
 
 \usepackage{graphicx}
 %% Math fonts, symbols, and formatting
-\usepackage{amsfonts,amssymb,amsbsy,amsmath,amsthm,enumitem}
+\usepackage{amsfonts,amssymb,amsbsy,amsmath,amsthm,enumitem,mathtools,braket,tikz}
+\usepackage[capitalize]{cleveref}
 \usepackage[parfill]{parskip}
 \usepackage{hyphenat}
 % \usepackage[style=ieee]{biblatex}
@@ -20,13 +21,8 @@
 
 %% added by advisor
 \usepackage{xcolor}
-\input{environments.tex}
-
-\newcommand{\fda}[1]{{\color{red} \textbf{Francesco}: #1}}
-
-\newcommand{\TODO}{{\color{red} \textbf{TODO!} }}
-\newcommand{\note}[1]{{\color{purple} \emph{#1} }}
-
+\input{include/environments.tex}
+\input{include/commands.tex}
 
 %% THESIS INFO
 \degreeprogram{Computer Science}
@@ -126,29 +122,26 @@ TODO
 %% TABLE OF CONTENTS
 \thesistableofcontents
 
-% \setlength{\parindent}{0}
-
 \clearpage
-\section{Introduction}
+
+% INTRODUCTION
 \input{chapters/introduction.tex}
-
-
 
 % PRELIMINARIES 
 \include{chapters/preliminaries.tex}
 
-
 % PAPERS 
-\include{chapters/main/general_approaches.tex}
-\include{chapters/main/demaine.tex}
+\include{chapters/main/np_hardness.tex}
+\include{chapters/main/swap_sort.tex}
+\include{chapters/main/alternative_metrics.tex}
 
 % CONCLUSIONS
-\section{Conclusions}
+\include{chapters/conclusions.tex}
 
 %% REFERENCES
 % \bibliographystyle{aaltosci_t}
 \bibliographystyle{ieeetr}
-\bibliography{zotero,manual_refs}
+\bibliography{manual_refs}
 % \bibliography{manual_refs}
 % \printbibliography
 
