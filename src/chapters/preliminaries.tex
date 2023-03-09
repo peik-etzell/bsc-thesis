@@ -20,16 +20,16 @@
 \subsection{A discrete grid of robots}
 Let our grid-based workspace be modeled as a graph $G \coloneqq (V, E)$. 
 Let it be a rectangle $\nngrid, \quad n_1, n_2 \geq 2$. 
-Label the vertices as $V = \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}$, and denote their $x$ and $y$ -coordinates as $v_x$ and $v_y$ respectively for any vertex $v \in V$.
+Label the vertices as $V = \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}$, and denote their $x$ and $y$ -coordinates as \fda{I think ``by'' is better than ``as''} $v_x$ and $v_y$ respectively for any vertex $v \in V$.
 To measure distance, we use the \emph{Manhattan norm} $L_1 = \manhattan{v - w} \coloneqq (\abs{v_x - w_x} + \abs{v_y - w_y})$.
-Using this, the edges can be defined as $E = \set{(v, w) \mid \manhattan{v - w} = 1 \mid v, w \in V}$.
+Using this, the edges can be defined as $E = \set{(v, w) \mid \manhattan{v - w} = 1 \mid v, w \in V}$ \fda{the second $ \mid $ is misplaced}.
 In other words, nodes are only connected to their up to four immediate neighbors in the plane.
 
 A \emph{configuration} is an injective mapping $\conf{} : V \rightarrow \set{1, 2, \dots, N, \bot}$. 
-Injective implies no two vertices in $V$ can be occupied at once, while $\bot$ signifies an empty vertex, so there will always be exactly $(\nngrid - N)$ empty squares in the grid. 
+Injective implies no two vertices in $V$ can be occupied at once, while $\bot$ signifies an empty vertex, so there will always be exactly $(\nngrid - N)$ empty squares in the grid. \fda{Rephrase: injectivity implies}
 
-The \emph{inverse} of a configuration $\iconf{}{r} = (x, y), r \in R$ is the \emph{position} of a robot. 
-The robots move synchronously and in parallel, a maximum of 1 square per step:
+The \emph{inverse} of a configuration $\iconf{}{r} = (x, y), r \in R$ is the \emph{position} of a robot \fda{You did not defined the set $R$ before?}. 
+The robots move synchronously and in parallel, a maximum of 1 square \fda{edge?} per step:
 a configuration can thus be \emph{transformed} into another configuration in a \emph{single step} if and only if:
 
 \begin{align}
@@ -37,16 +37,18 @@ a configuration can thus be \emph{transformed} into another configuration in a \
 	\land & \set{\nconf{1}{v} = \nconf{2}{w} \Rightarrow \nconf{2}{v} \neq \nconf{1}{w}, \quad \forall v, w \in V}\label{req:no_swaps}
 \end{align}
 
+\fda{What are $C_1$ and $C_2$?}
+
 In other words, \cref{req:limited_movement} implies a robot can stay in place or move to a neighboring square at every step, while \cref{req:no_swaps} forbids two robots from swapping places in a single transformation step (and they can never occupy the same vertex), equivalent to a collision in the real world.
 
 Denote a single transformation step as $\conf{1} \rightarrow \conf{2}$.
-A \emph{schedule} is a series of transformation steps $\conf{1} \rightarrow \conf{2} \rightarrow \cdots \rightarrow \conf{k}$. 
+A \emph{schedule} is a series \fda{maybe sequence?} of transformation steps $\conf{1} \rightarrow \conf{2} \rightarrow \cdots \rightarrow \conf{k}$. 
 A configuration $\conf{s}$ can be transformed into a configuration $\conf{t}$ if there exists a schedule $\conf{s} \rightarrow \conf{s + 1} \rightarrow \cdots \rightarrow \conf{t - 1} \rightarrow \conf{t}$.
 
 
 \begin{definition}\label{def:motion_planning_problem}
 	Given a start configuration $\conf{s}$ and a target configuration $\conf{t}$ of a workspace, 
-	the \emph{motion planning problem} is to find a \emph{schedule} that transforms $\conf{s}$ into $\conf{t}$.
+	the \emph{motion planning problem} is \fda{asks?} to find a \emph{schedule} that transforms $\conf{s}$ into $\conf{t}$.
 \end{definition}
 
 \begin{remark}\label{remark:reachability}
@@ -65,13 +67,13 @@ A configuration $\conf{s}$ can be transformed into a configuration $\conf{t}$ if
 \end{definition}
 
 \begin{definition}\label{def:optimality}
-	A schedule $S_\text{opt}$ is \emph{optimal} by some metric $f : S \rightarrow \mathbb{R}$ iff $f(S) \geq f(S_\text{opt})$ for all valid schedules $S$.
+	A schedule $S_\text{opt}$ is \emph{optimal} by some metric $f : S \rightarrow \mathbb{R}$ iff $f(S) \geq f(S_\text{opt})$ for all valid schedules $S$. \fda{maybe define metric?}
 \end{definition}
 
 
 \begin{definition}
 	Let the makespan of a schedule be such a metric: $M : S \rightarrow \text{\# steps in } S$.
-	The \emph{minimum makespan motion planning problem} is to find an \emph{optimal} schedule to \cref{def:motion_planning_problem} with respect to the makespan $M$ of that schedule.
+	The \emph{minimum makespan motion planning problem} is to find an \emph{optimal} schedule to \cref{def:motion_planning_problem} with respect to the makespan $M$ of that schedule. \fda{Rewrite as $\text{\# steps in } S$ is not standard notation.}
 \end{definition}
 
 \begin{remark}
@@ -79,7 +81,7 @@ A configuration $\conf{s}$ can be transformed into a configuration $\conf{t}$ if
 \end{remark}
 
 \begin{definition}
-	Let a schedule with makespan $M$ have the aforementioned lower bound as $L$.
+	Let a schedule with makespan $M$ have the aforementioned lower bound as \fda{Maybe ``, denoted by''} $L$.
 	The $\emph{stretch factor}$ for that schedule is defined as $\frac{M}{L} \geq 1$.
 \end{definition}
 
