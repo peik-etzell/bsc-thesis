@@ -1,25 +1,9 @@
 \section{Preliminaries}
-% focusing on discrete at least for now, would be nice to show the connection to the real world through the continuous case
-% \subsection{The continuous setting}
-% Let our \emph{workspace} be defined as a finite space $W \coloneqq \nngrid \subset \rsquared$.
-% In our workspace we have $N$ robots $R \coloneqq \set{1, 2, \dots , N} \subset \mathbb{N}$. 
-% The \emph{positions} of the robots are defined by the center of their discs $v_i = \colvec{x}{y} \in \rsquared, \forall i \in R$, and they all have a \emph{constant radius 1}.
-% We use the \emph{Euclidean norm} $L_2 = \euclnorm{p - q} \coloneqq \sqrt{(p_x - q_x)^2 + (p_y - q_y)^2}$ for any points $p, q \in \rsquared$ to measure distance.   
-% The shapes of the robots are thus defined by the points within unit radius of their centers: $\set{p \mid \euclnorm{p - v_i} \leq 1} \subset \rsquared, \quad \forall i \in R$.
-%
-% The trajectory of a robot 
-%
-% The robots are not allowed to collide, which requires that they are disjoint: $\set{\euclnorm{v_i - v_j} \geq 2 \quad \forall i, j \in R \mid i \neq j}$.
-%
-
-
-% which are defined by their centers $x_i \in \rsquared$, $\forall i \in R$, and their radii, fixed at 1. 
-% The robots define 
 
 \subsection{A discrete grid of robots}
 
 % WORKSPACE 
-Let our grid-based workspace be modeled as a graph \ilmath{G \coloneqq (V, E)}. Let it be a rectangle \ilmath{n_1 \times n_2} where \ilmath{n_1, n_2 \geq 2 \tand n_1, n_2 \in \mathbb{N}}. Label the vertices as \ilmath{V = \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}}, and denote their \ilmath{x} and \ilmath{y} -coordinates by \ilmath{v_x} and \ilmath{v_y} respectively for any vertex \ilmath{v \in V}. To measure distance, we use the \emph{Manhattan norm} \ilmath{L_1 = \manhattan{v - w} \coloneqq (\abs{v_x - w_x} + \abs{v_y - w_y})}. Using this, the edges can be defined as \ilmath{E = \set{(v, w) \mid \manhattan{v - w} = 1 \text{ for } v, w \in V}}. In other words, nodes are only connected to their up to four immediate neighbors in the plane.
+Let our grid-based workspace be modeled as a graph \ilmath{ G \coloneqq (V, E)}. Let it be a rectangle \ilmath{n_1 \times n_2} where \ilmath{n_1, n_2 \geq 2 \tand n_1, n_2 \in \mathbb{N}}. Label the vertices as \ilmath{V = \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}}, and denote their \ilmath{x} and \ilmath{y} -coordinates by \ilmath{v_x} and \ilmath{v_y} respectively for any vertex \ilmath{v \in V}. To measure distance, we use the \emph{Manhattan norm} \ilmath{L_1 = \manhattan{v - w} \coloneqq (\abs{v_x - w_x} + \abs{v_y - w_y})}. Using this, the edges can be defined as \ilmath{E = \set{(v, w) \mid \manhattan{v - w} = 1 \text{ for } v, w \in V}}. In other words, nodes are only connected to their up to four immediate neighbors in the plane.
 
 % ROBOTS AND CONFIGURATION
 Let there be \ilmath{N \leq (\nngrid)} robots in our workspace. We can identify them by a number \ilmath{r \in R := \set{1, 2, \dots , N} \subset \mathbb{N}}. Let \ilmath{\bot} signify an empty vertex. A \emph{configuration} is then a mapping \ilmath{\conf{} : V \rightarrow \set{1, 2, \dots, N, \bot}} injective upon the robots in \ilmath{R}. Injectivity implies no two vertices in \ilmath{V} can be occupied at once, so there will always be exactly \ilmath{(\nngrid - N)} empty squares in the grid.
@@ -41,13 +25,11 @@ Denote a single transformation step as \ilmath{\conf{1} \rightarrow \conf{2}}. A
 
 % PROBLEM DEFINITION
 \begin{definition}\label{def:motion_planning_problem}
-	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, 
-	the \emph{motion planning problem} asks to find a \emph{schedule} that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
+	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, the \emph{motion planning problem} asks to find a \emph{schedule} that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
 \end{definition}
 
 \begin{remark}\label{remark:reachability}
-	For a \ilmath{2 \times 2} square and any \ilmath{1 \times n} rectangle, where \ilmath{n \geq 2}, there exist pairs of configurations that are not reachable from each other via any schedule. See \cref{fig:reachability} for an example.
-	For any other rectangular workspace there always exists such a schedule. 
+	For a \ilmath{2 \times 2} square and any \ilmath{1 \times n} rectangle, where \ilmath{n \geq 2}, there exist pairs of configurations that are not reachable from each other via any schedule. See \cref{fig:reachability} for an example. For any other rectangular workspace there always exists such a schedule. 
 \end{remark}
 % IMPOSSIBLE 2*2 SQUARE FIGURE
 \begin{figure}[h]

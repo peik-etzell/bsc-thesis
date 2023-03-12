@@ -22,8 +22,9 @@
 \newcommand{\sopt}{S_\text{opt}}
 
 % inline math
-% \DeclarePairedDelimiter{\ilmath}{\(}{\)}
-\DeclarePairedDelimiter{\ilmath}{$}{$}
+\newcommand{\ilmath}[1]{\( #1 \)}
+% set using parentheses
+\newcommand{\parenset}[1]{(\; #1 \;)}
 
 % euclidean norm
 \DeclarePairedDelimiter{\euclnorm}{\lVert}{\rVert_2}
@@ -31,7 +32,4 @@
 \DeclarePairedDelimiter{\manhattan}{\lVert}{\rVert_1}
 % absolute value
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-% set using parentheses
-\DeclarePairedDelimiter{\parenset}{(\;}{\;)}
-
 
