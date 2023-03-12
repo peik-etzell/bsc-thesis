@@ -7,7 +7,8 @@
 
 % math commands
 \newcommand{\rsquared}{{ \mathbb{R}^2 }}
-\newcommand{\nngrid}{{ n_1 \times n_2 }}
+% \newcommand{\nngrid}{{ n_{1}n_{2} }}
+\newcommand{\nngrid}{{ n_{1}n_{2} }}
 
 % a configuration C is a mapping ...
 \newcommand{\conf}[1]{\mathcal{C}_{#1}}
@@ -15,9 +16,22 @@
 \newcommand{\iconf}[2]{\conf{#1}^{-1}(#2)}
 % normal configuration with (#2)
 \newcommand{\nconf}[2]{\conf{#1}(#2)}
+% text and with spacing 
+\newcommand{\tand}{\text{ and }}
+
+\newcommand{\sopt}{S_\text{opt}}
+
+% inline math
+% \DeclarePairedDelimiter{\ilmath}{\(}{\)}
+\DeclarePairedDelimiter{\ilmath}{$}{$}
+
 % euclidean norm
 \DeclarePairedDelimiter{\euclnorm}{\lVert}{\rVert_2}
 % manhattan norm
 \DeclarePairedDelimiter{\manhattan}{\lVert}{\rVert_1}
 % absolute value
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+% set using parentheses
+\DeclarePairedDelimiter{\parenset}{(\;}{\;)}
+
+
