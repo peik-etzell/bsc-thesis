@@ -8,15 +8,53 @@ A \emph{Turing Machine} (TM) is a mathematically modeled machine capable of gene
 
 There are different \emph{classes} of computational problems in terms of computational complexity. Any problem belonging to the \emph{P}-class of problems is solvable by a TM in \emph{polynomial time}, i.e. in \ilmath{O(n^k)} time on the size of the input \emph{n} and some constant \emph{k}.
 
-A problem in the \emph{NP}-class of problems is solvable in \emph{nondeterministic polynomial time}. It means a correct solution is \emph{verifiable} in polynomial time, but finding a solution might take considerably longer. It is an important open question whether \ilmath{P = NP}, but most mathematicians believe P is a proper subset of NP.
+A problem in the \emph{NP}-class of problems is solvable in \emph{nondeterministic polynomial time}. It means a solution is \emph{verifiable} as correct or incorrect by a TM in polynomial time, but finding a correct solution might take considerably longer. It remains as an important open question whether P = NP, but many believe P is a proper subset of NP.
 
-\note{NP-complete}
+A transformation of a problem \ilmath{Y} into another problem \ilmath{X} such that a solution to \ilmath{X} solves \ilmath{Y} is called a \emph{reduction} and is commonly denoted \ilmath{Y \leq X}. If the reduction can be done in polynomial time, it can be denoted \ilmath{Y \leq_p X}.
 
-\begin{definition}
-	A problem is classified as \emph{NP-hard} if it is \emph{at least as hard} as the hardest problems in the \emph{NP}-class. 
+\begin{definition}\label{def:np_complete}
+	A problem \emph{X} is \emph{NP-complete} (\ilmath{X \in \text{NPC}}) if \emph{X} is in NP and there exists a polynomial time reduction from every problem in NP to \emph{X}:
+	\begin{align}
+		X \in \text{NPC} \Leftrightarrow \parenset{X \in \NP} \land \parenset{Y \leq_p X, \; \forall Y \in \NP}
+	\end{align}
+	NP-complete is essentially the hardest class of problems that can be verified in polynomial time. 
 \end{definition}
 
-A computational problem that asks a yes/no question based on some input is called a \emph{decision problem}.
+\begin{remark}\label{rem:p_np_disjoint}
+	If \ilmath{\pclass \neq \NP} holds, the classes of P and NP-complete problems are disjoint. Otherwise \emph{all} problems in NP would be polynomially reducible to problems solvable in polynomial time, thus also solvable themselves in polynomial time. This would imply P = NP: 
+	\begin{align*}
+		& \pclass \cap \text{NPC} \neq \emptyset \\
+		\Rightarrow \; & \exists X \in \pclass : Y \leq_p X, \; \forall Y \in \NP \\
+		\Rightarrow \; & Y \in \pclass, \; \forall Y \in \NP \\
+		\Rightarrow \; & \pclass = \NP
+	\end{align*}
+\end{remark}
+
+\begin{definition}\label{def:np_hard}
+	A problem \emph{H} is classified as \emph{NP-hard} if there exists a polynomial time reduction \ilmath{X \leq_p H, \; \forall X \in \NP}. Note:
+	\begin{align*}
+		X \in \NP \Rightarrow X \text{ is NP-hard} \\
+		X \text{ is NP-hard} \not\Rightarrow X \in \NP
+	\end{align*}
+\end{definition}
+
+\begin{remark}\label{rem:p_np_hard_disjoint}
+	The same construction as in \cref{rem:p_np_disjoint} works here too, P and NP-hard problems are disjoint, assuming \ilmath{\pclass \neq \NP}.
+\end{remark}
+
+A computational problem that asks a yes/no question based on some input is called a \emph{decision problem}. \note{short p.}
+
+The Boolean satisfiability problem, abbreviated \emph{SAT}, is set of decision problems asking whether a given boolean expression can be evaluated to TRUE for some state of its variables \ilmath{\set{x_1, x_2, \dots, x_n} \in \set{\true, \false}^{n}}. 
+Boolean expressions are constructed from the variables \ilmath{x}, negations (NOT \ilmath{\neg}), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. 
+
+An arbitrary example SAT problem could ask whether \ilmath{(x_1 \lor x_2) \land \neg (x_1 \land x_2)} is satisfiable. This particular expression is satisfiable when \ilmath{(x_1, x_2) \in \set{(\true, \false), (\false, \true)}}, coincidentally similar to an XOR expression.
+
+
+
+% Boolean expressions are constructed from positive and negative literals (\ilmath{x} and \ilmath{\neg x} respectively), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. An example SAT problem would ask whether \ilmath{}
+
+
+
 
 \begin{definition}
 	3SAT
@@ -29,5 +67,9 @@ A computational problem that asks a yes/no question based on some input is calle
 \end{theorem}
 
 \begin{proof}
-	\dots
+	The following proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3-SAT} to a decision formulation of a coordinated multi-robot motion planning problem: given start and end configurations, is there a schedule with makespan at most \emph{M}? Monotone 3-SAT asks whether there exists a solution satisfying a given boolean formula \ilmath{\varphi} in 3-CNF like a standard 3-SAT problem, with the additional requirement that each clause has all-positive or all-negative literals. Monotone 3-SAT is known to be NP-hard, which implies the decision problem formulation of the parallel motion planning problem is also NP-hard, see \cref{rem:p_np_hard_disjoint}. This further implies finding the minimum makespan schedule for a general parallel motion planning problem is NP-hard.
+
+	\subsubsection*{The reduction} 
+	The 3-CNF formula \ilmath{\varphi} is composed of \ilmath{n} variables \ilmath{\set{x_1, x_2, \dots, x_n}} and \ilmath{m} clauses (\ilmath{n \geq m}). Let our target makespan \emph{M} be fixed at the end of the construction, so that a schedule with makespan \emph{M} is achievable if and only if the original Monotone 3-SAT is satisfiable, otherwise \ilmath{M + 1}.
 \end{proof}
+

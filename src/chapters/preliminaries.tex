@@ -9,7 +9,7 @@ Let our grid-based workspace be modeled as a graph \ilmath{ G \coloneqq (V, E)}.
 Let there be \ilmath{N \leq (\nngrid)} robots in our workspace. We can identify them by a number \ilmath{r \in R := \set{1, 2, \dots , N} \subset \mathbb{N}}. Let \ilmath{\bot} signify an empty vertex. A \emph{configuration} is then a mapping \ilmath{\conf{} : V \rightarrow \set{1, 2, \dots, N, \bot}} injective upon the robots in \ilmath{R}. Injectivity implies no two vertices in \ilmath{V} can be occupied at once, so there will always be exactly \ilmath{(\nngrid - N)} empty squares in the grid.
 
 % CONFIGURATION INVERSE
-The \emph{inverse} of a configuration \ilmath{\iconf{}{r} = (x, y), r \in R} is the \emph{position} of a robot. The robots move synchronously and in parallel, up to a single edge at a time. A configuration \ilmath{\conf{1}} can thus be \emph{transformed} into another configuration \ilmath{\conf{2}} in a \emph{single step} if and only if:
+The \emph{inverse} of a configuration \ilmath{\iconf{}{r} = (x, y), r \in R} is the \emph{position} of a robot. The robots move synchronously and in parallel, up to a single edge at a time. A valid (no-collision) configuration \ilmath{\conf{1}} can thus be \emph{transformed} into another valid configuration \ilmath{\conf{2}} in a \emph{single step} if and only if:
 
 % TRANSFORMATION REQUIREMENTS
 \begin{align}
