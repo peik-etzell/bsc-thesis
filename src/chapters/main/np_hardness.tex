@@ -45,20 +45,31 @@ A transformation of a problem \ilmath{Y} into another problem \ilmath{X} such th
 A computational problem that asks a yes/no question based on some input is called a \emph{decision problem}. \note{short p.}
 
 The Boolean satisfiability problem, abbreviated \emph{SAT}, is set of decision problems asking whether a given boolean expression can be evaluated to TRUE for some state of its variables \ilmath{\set{x_1, x_2, \dots, x_n} \in \set{\true, \false}^{n}}. 
-Boolean expressions are constructed from the variables \ilmath{x}, negations (NOT \ilmath{\neg}), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. 
+Boolean expressions are constructed from the variables (\ilmath{x}), negations (NOT \ilmath{\neg}), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. 
 
-An arbitrary example SAT problem could ask whether \ilmath{(x_1 \lor x_2) \land \neg (x_1 \land x_2)} is satisfiable. This particular expression is satisfiable when \ilmath{(x_1, x_2) \in \set{(\true, \false), (\false, \true)}}, coincidentally similar to an XOR expression.
+The following is an example of a boolean expression:
+\begin{align}\label{ex:boolean_xor}
+	(x_1 \lor x_2) \land \neg (x_1 \land x_2)
+\end{align}
+The corresponding SAT problem would ask whether it is satisfiable. This particular expression is satisfiable, as when \ilmath{(x_1, x_2) \in \set{(\true, \false), (\false, \true)}} the expression evaluates to TRUE, coincidentally equivalent to an XOR expression.
+Let a \emph{literal} be a variable \ilmath{x} (a positive literal) or the negation of a variable \ilmath{\neg x} (a negative literal). A (disjunctive) \emph{clause} is then defined as a disjunction of literals \ilmath{x_1 \lor x_2 \lor \dots \lor x_k}. 
 
+Let a boolean expression be in \emph{Conjunctive Normal Form} (CNF) if and only if it is composed of adjunctions of disjunctive clauses. The previous example in \cref{ex:boolean_xor} is \emph{not} in CNF, as the negation of a clause is not allowed, and the second parethesis is an adjunction, not a disjunction.
 
+\note{Always possible to convert into CNF} [?]
+
+\note{Convert \cref{ex:boolean_xor} into CNF as a further example}
+
+\begin{definition}
+	A \emph{3SAT} problem is defined as a SAT problem in CNF, with all clauses having exactly 3 literals each.
+\end{definition}
+
+\begin{definition}
+	A \emph{Monotone 3SAT} is defined as a further restricted version of 3SAT, such that each clause of the expression has all-positive or all-negative literals.
+\end{definition}
 
 % Boolean expressions are constructed from positive and negative literals (\ilmath{x} and \ilmath{\neg x} respectively), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. An example SAT problem would ask whether \ilmath{}
 
-
-
-
-\begin{definition}
-	3SAT
-\end{definition}
 
 \subsection{The theorem}
 
@@ -67,9 +78,41 @@ An arbitrary example SAT problem could ask whether \ilmath{(x_1 \lor x_2) \land 
 \end{theorem}
 
 \begin{proof}
-	The following proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3-SAT} to a decision formulation of a coordinated multi-robot motion planning problem: given start and end configurations, is there a schedule with makespan at most \emph{M}? Monotone 3-SAT asks whether there exists a solution satisfying a given boolean formula \ilmath{\varphi} in 3-CNF like a standard 3-SAT problem, with the additional requirement that each clause has all-positive or all-negative literals. Monotone 3-SAT is known to be NP-hard, which implies the decision problem formulation of the parallel motion planning problem is also NP-hard, see \cref{rem:p_np_hard_disjoint}. This further implies finding the minimum makespan schedule for a general parallel motion planning problem is NP-hard.
+	The following proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3SAT} to a decision formulation of a coordinated multi-robot motion planning problem: given start and end configurations, is there a schedule with makespan at most \emph{M}? Monotone 3SAT asks whether there exists a solution satisfying a given boolean formula \ilmath{\varphi} like in SAT, with the additional requirement that each clause has three all-positive or all-negative literals. Monotone 3SAT is known to be NP-hard, so a reduction from it implies the decision problem formulation of the parallel motion planning problem is also NP-hard, see \cref{rem:p_np_hard_disjoint}. Considering that finding a minimum makespan schedule to a given motion planning problem would answer the decision problem, it further implies that the problem of computing a minimum makespan schedule for a general parallel motion planning problem is NP-hard.
 
 	\subsubsection*{The reduction} 
-	The 3-CNF formula \ilmath{\varphi} is composed of \ilmath{n} variables \ilmath{\set{x_1, x_2, \dots, x_n}} and \ilmath{m} clauses (\ilmath{n \geq m}). Let our target makespan \emph{M} be fixed at the end of the construction, so that a schedule with makespan \emph{M} is achievable if and only if the original Monotone 3-SAT is satisfiable, otherwise \ilmath{M + 1}.
+	The idea is to construct start and target configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively such that a specific makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise requiring \ilmath{M + 1} transformation steps at a minimum to transform \ilmath{\conf{s} \rightarrow \conf{t}}.
+
+	% Let our target makespan \emph{M} be fixed at the end of the construction, so that a schedule with makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise a schedule with makespan \ilmath{M + 1}. 
+
+	The formula \ilmath{\varphi} is composed of \ilmath{n} variables \ilmath{\set{x_1, x_2, \dots, x_n}} and \ilmath{m} clauses \ilmath{\set{C_1, C_2, \dots, C_m}} with three literals each. Let us first represent each variable \ilmath{x_j} with a \emph{variable robot} \ilmath{r_j}.
+	\note{x is annoyingly similar to coordinates, what should be used?}
+
+	Let us consider the path of a single variable robot \ilmath{r_j} first. Let \ilmath{y_j} be the starting \ilmath{y}-coordinate for a specific variable robot \ilmath{r_j} for simplicity, defining it when adding multiple variables. Each variable robot starts at the left of our workspace, at \ilmath{(0, y_j)}, and has its target position at the right of the workspace, at \ilmath{(M - 2, y_j)}. Notice it has two steps to spare relative to a straight path towards the target, and could thus move one step up and one step down or wait for up to two timesteps. 
+
+	Let there be two \emph{auxiliary robots} for each variable robot, \emph{constraining} the variable robot \ilmath{r_j}: a left auxiliary robot starts at \ilmath{(1, y_j + 1)} and has to move down at every timestep towards its goal at \ilmath{(1, y_j + 1 - M)}. Similarly, a right auxiliary robot starts at \ilmath{(M - 3, y_j + 1 - M)} and moves upwards at every timestep toward its target at \ilmath{(M - 3, y_j + 1)}. As a result, the variable robot \ilmath{r_j} is blocked from moving right at timestep 0 by the left auxiliary robot, and blocked from moving right at timestep \ilmath{M - 2} by the right auxiliary robot.
+
+	The variable robot is then `free' to `choose' to either wait at timesteps 0 and \ilmath{M - 2}, traveling at \ilmath{y(r_j) = y_j} towards its target, or alternatively, moving upwards to \ilmath{y_j + 1} at timestep 0 and down at timestep \ilmath{M - 2}. Let the lower path be equivalent to an assignment of TRUE to \ilmath{x_j}, while the upper path is equivalent to a FALSE assignment to \ilmath{x_j}.
+
+	\note{very WIP here onwards}
+	For each clause \ilmath{C_i = \set{ x_{j_1}, x_{j_2}, x_{j_3} }}, let us have three corresponding \emph{checker robots} \ilmath{\set{\checker{1}, \checker{2}, \checker{3}}} checking their respective literal, and one \emph{clause robot} checking that at least one checker robot evaluates to TRUE for that clause. Let each checker robot start diagonally downwards from its respective variable robot, and move in the positive \ilmath{xy}-direction towards its target, across the path of the variable robot. Let it be positioned so that it has to wait for the variable robot for one timestep iff the assignment of the variable robot is mismatched with the literal. 
+
+
+
+
+	If it corresponds to a positive literal, \ilmath{position} otherwise. Let each checker robot have a target position of \ilmath{start + offset}. This means the checker robot has to pass by its corresponding variable robot, and wait for one timestep if and only if the variable assignment is a mismatch with respect to the literal. 
+
+	,  Let their start positions be defined as \ilmath{\alpha_{i_k} \coloneqq}.
+
+
+
+
+
+
+
+	\vdots 
+
+	It is thus possible to reduce \texttt{Monotone 3SAT} into a parallel motion planning problem of finding a minimum makespan, which implies minimum makespan parallel motion planning is NP-hard.
+ 
 \end{proof}
 
