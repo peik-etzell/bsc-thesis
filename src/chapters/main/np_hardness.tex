@@ -2,6 +2,7 @@
 
 \cite{siamcomp/DemaineFKMS19} \cite{corr/YuL15c}
 
+% PRELIMINARIES
 \subsection{Preliminaries}
 
 A (deterministic) \emph{Turing Machine} (TM) is a mathematically modeled machine capable of general purpose computations operating on a tape of symbols. It is generally considered to be equivalent in capabilities to most mathematical definitions of computation \cite{aw/HopcroftU79}. See \cite{aw/HopcroftU79} for a formal definition.
@@ -77,6 +78,14 @@ The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether it is satis
 % Boolean expressions are constructed from positive and negative literals (\ilmath{x} and \ilmath{\neg x} respectively), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. An example SAT problem would ask whether \ilmath{}
 
 
+
+
+
+
+
+
+
+% MAIN THEOREM
 \subsection{The theorem}
 
 \note{should this be in preliminaries?}
@@ -153,6 +162,8 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 	As a result of this construction, an arbitrary Monotone 3SAT problem can be simulated with coordinated robots on a grid. A makespan of \ilmath{M = 3nm + 4n + 4} is achievable if and only if every clause robot has a clear path, implying they all have at least one satisfied literal. This implies \ilmath{\varphi} is satisfiable if and only if there is a schedule with makespan \ilmath{M} that transforms the workspace from \ilmath{\conf{s} \rightarrow \conf{t}}.
 \end{proof}
 
+
+Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS19}, this construction works with a smaller makespan: \ilmath{3nm + 4n + 4} versus \ilmath{6n(m + 2)} for \cite{siamcomp/DemaineFKMS19}. The number of used robots is also much smaller: \ilmath{3n + 4m} robots compared to \ilmath{3n + 3m + 6n(m + 2)} robots in the original. 
 
 
 \begin{figure}[h]
