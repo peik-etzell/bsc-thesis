@@ -36,11 +36,6 @@ A transformation of a problem \ilmath{B} into another problem \ilmath{A} such th
 	A problem \emph{H} is classified as \emph{NP-hard} if there exists a polynomial time reduction \ilmath{A \leq_p H, \; \forall A \in \NP}. Note that \ilmath{H} begin NP-hard does \emph{not} imply \ilmath{H \in \NP}. Though if \ilmath{H} can be proven to belong to NP, i.e. be verifiable in polynomial time, \ilmath{H} will then by definition be NP-complete.
 \end{definition}
 
-	% Note:
-	% \begin{align*}
-	% 	H \in \NP \Rightarrow H \text{ is NP-hard} \\
-	% 	H \text{ is NP-hard} \not\Rightarrow H \in \NP
-	% \end{align*}
 \begin{remark}\label{rem:p_np_hard_disjoint}
 	The same construction as in \cref{rem:p_np_disjoint} works here too, P and NP-hard problems are disjoint, assuming \ilmath{\pclass \neq \NP}.
 \end{remark}
@@ -86,14 +81,14 @@ The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether it is satis
 
 \note{should this be in preliminaries?}
 
-Let a decision problem formulation of minimum makespan motion planning be as follows: Given start and end configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively, is there a schedule that can transform \ilmath{\conf{s} \rightarrow \conf{t}} with makespan at most \emph{M}? 
+Let a decision problem formulation of minimum makespan motion planning be as follows: Given start and end configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively, determine if there exists a schedule that can transform \ilmath{\conf{s} \rightarrow \conf{t}} with makespan at most \emph{M}.
 
 \begin{lemma}\label{lemma:np}
-	The decision problem formulation of a minimum makespan motion planning problem is in NP.
+	The decision problem formulation of a minimum makespan motion planning problem on a grid is in NP.
 \end{lemma}
 
 \begin{proof}
-	It is also easy to show that the decision problem is in NP; to verify a solution, one has to check three things:
+	It is also easy to show that the decision problem is in NP; to verify a found solution, one has to check three things:
 	\begin{enumerate}
 		\item Every transformation step of a schedule should be valid according to \cref{req:limited_movement} and \cref{req:no_swaps}.\label{checks:transformations}
 		\item After the last step of execution, the configuration should equal that of \ilmath{\conf{t}}.\label{checks:target_acquired}
@@ -109,50 +104,59 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 \end{theorem}
 
 \begin{proof}
-	The following proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3SAT} to a decision formulation of a coordinated multi-robot motion planning problem. As Monotone 3SAT is known to be NP-complete, a reduction M. 3SAT \ilmath{\leq_p} M3PP implies M3PP is NP-hard. Together with \cref{lemma:np}, this implies M3PP is also NP-complete. 
+	The following proof, heavily based on the proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3SAT} to a decision formulation of a coordinated multi-robot motion planning problem. As Monotone 3SAT is known to be NP-complete, a polynomial reduction implies the reduced problem is NP-hard. Together with \cref{lemma:np}, this implies the problem is also NP-complete. 
 
 	\subsubsection*{The reduction} 
-	Let \ilmath{\varphi} be some boolean expression corresponding to some Monotone 3SAT problem. The idea is to construct start and target configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively such that a specific makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise requiring \ilmath{M + 1} transformation steps at a minimum to transform \ilmath{\conf{s} \rightarrow \conf{t}}.
+	Let \ilmath{\varphi} be some boolean expression corresponding to some Monotone 3SAT problem. The idea is to construct a workspace with robots having start and target configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively such that a critical makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise requiring \ilmath{M + 1} transformation steps at a minimum to transform \ilmath{\conf{s} \rightarrow \conf{t}}. 
 
 	% Let our target makespan \emph{M} be fixed at the end of the construction, so that a schedule with makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise a schedule with makespan \ilmath{M + 1}. 
 
-	The formula \ilmath{\varphi} is composed of \ilmath{n} boolean variables \ilmath{\set{b_1, b_2, \dots, b_n}} and \ilmath{m} clauses \ilmath{\set{C_1, C_2, \dots, C_m}} with three literals each. Let us first represent each variable \ilmath{b_j} with a \emph{variable robot} \ilmath{r_j}.
+	The formula \ilmath{\varphi} is composed of \ilmath{n} boolean variables \ilmath{\set{b_1, b_2, \dots, b_n}} and \ilmath{m} clauses \ilmath{\set{C_1, C_2, \dots, C_m}} with three literals each. Let our variables be represented by \ilmath{n} \emph{variable robots} \ilmath{\set{r_1, r_2, \dots, r_n}}. These will be able to `choose' one of two paths independently of one another, representing \true\ and \false\ assignments to them. The variable robots are coupled in a one-to-many mapping to the clauses by \ilmath{3m} \emph{literal robots}: \ilmath{\set{l_{i,k} \mid i \in \set{1, \dots, m},\ k \in \set{1, 2, 3}}}. They are positioned so that they pass by their corresponding variable robot, and have to wait if the variable assignment is mismatched with the literal. There are finally \ilmath{m} \emph{clause robots} to ensure that at least one literal per simulated clause evaluates to \true. This is accomplished by the clause robot having a clear path to its target only if at least one corresponding literal robot has not needed to wait for its variable robot. The workspace is constructed so that any robot deviating from its constrained path results in a schedule with makespan \ilmath{> M}.
 
-	Let us consider the path of a single variable robot \ilmath{r_j} first. Let \ilmath{y_j} be the starting \ilmath{y}-coordinate for a specific variable robot \ilmath{r_j} for simplicity, with a definition following later in conjunction with adding multiple variables. Each variable robot starts at the left of our workspace, at \ilmath{ \coord{0}{y_j} }, and has its target position at the right of the workspace, at \ilmath{ \coord{M - 2}{y_j} }. Notice it has two steps to spare relative to a straight path towards the target, and could thus move one step up and one step down \emph{or} wait for up to two timesteps along the way.
+	% is made so a makespan \ilmath{M} is only achievable if every clause robot is not blocked by a literal robot on its path, and all robots are constrained by the makespan to behave like .
 
-	Let there be two \emph{auxiliary robots} for each variable robot, \emph{constraining} the variable robot \ilmath{r_j}: a left auxiliary robot starts at \ilmath{ \coord{1}{y_j + 1} } and has to move down at every timestep towards its goal at \ilmath{ \coord{1}{y_j + 1 - M} }. Similarly, a right auxiliary robot starts at \ilmath{ \coord{M - 3}{y_j + 1 - M} } and moves upwards at every timestep toward its target at \ilmath{ \coord{M - 3}{y_j + 1} }. As a result, the variable robot \ilmath{r_j} is blocked from moving right at timestep 0 by the left auxiliary robot, and is required to be at \ilmath{x = (M - 2)} before timestep \ilmath{M}, otherwise being cut off by the right auxiliary robot.
+	There are some details to deal with: the variable robots have to be constrained to be able to take exactly two distinct paths, while the literal robots have to be positioned to get the correct timing with its corresponding variable robot and clause robot simultaneously.
 
-	The variable robot is then \enquote{free} to \enquote{choose} to either wait at timesteps 0 and \ilmath{M}, traveling at a constant height of \ilmath{y_j} towards its target, or alternatively, moving upwards to \ilmath{y_j + 1} at timestep 0 and down at timestep \ilmath{M}. Let the lower path be equivalent to an assignment of \true\  to \ilmath{b_j}, while the upper path is equivalent to a \false\ assignment to \ilmath{b_j}.
+	Let the variable robot \ilmath{r_j} have a start position at \ilmath{\coord{0}{4j}} and target position at \ilmath{\coord{M - 2}{4j}}. Notice there is exactly two timesteps to spare with respect to the critical makespan \ilmath{M}. Let there be a \emph{left auxiliary robot} and a \emph{right auxiliary robot} for each variable robot. The left auxiliary starts at \ilmath{\coord{1}{4j + 1}} and travels down to \ilmath{\coord{1}{4j + 1 - M}}, while the right auxiliary starts at \ilmath{\coord{M - 3}{4j + 1 - M}}, and moves up to \ilmath{\coord{M - 3}{4j + 1}}. The auxiliaries have to move exactly \ilmath{M} steps, and thus cannot wait for \ilmath{r_j}. Thus \ilmath{r_j} is blocked from moving right at timestep 0 by the left auxiliary, and required to pass \ilmath{x = M - 3} before timestep \ilmath{M} to avoid blocking the right auxiliary. As a result, \ilmath{r_j} has exactly two options: wait at timesteps \ilmath{0} and \ilmath{M}, alternatively move up at timestep \ilmath{0} and down at timestep \ilmath{M}. This constrains \ilmath{r_j} to move monotonously to the right between steps 1 and \ilmath{M - 1}.
 
+	% Let the clause robot \ilmath{c_i} have start and target positions such that it has to move exactly \ilmath{M-2} steps left and \ilmath{2} steps down. We will construct the paths of our literal robots such that they block the \emph{upper, middle} and \emph{lower} vertical levels in sequence: if the clause robot is blocked first at the uppermost level, it has no choice but move one level down and continue. If it is again blocked at the middle level, it has to move down a last time. At the lowest level, a blockage forces the clause robot to wait. % We will construct the paths of the literal robots to block the clause robot precisely like this. 
+
+	Let the literal robots \ilmath{\set{l_{i,1}, l_{i,2}, l_{i,3}}} of clause \ilmath{C_i} correspond to the variable robots \ilmath{\set{r_{j_1}, r_{j_2}, r_{j_3}},\ j_1 < j_2 < j_3}. Let \ilmath{f_i = -1} if \ilmath{C_i} is negative, \ilmath{f_i = 0} otherwise. Finally, define the vectors \ilmath{\set{\alpha,\ \beta,\ \gamma,\ \phi}}:
+	\begin{align*}
+	\alpha \coloneqq \colvec{3n}{-3n} \quad 
+	\beta \coloneqq \colvec{2}{2} \quad 
+	\gamma \coloneqq \colvec{-1}{1} \quad 
+	\phi \coloneqq \colvec{0}{1}
+	\end{align*}
+
+	Set the starting position of literal robot \ilmath{l_{i,k}} to be \ilmath{\parens{\alpha \cdot i + \beta \cdot j_k + \gamma \cdot k + \phi \cdot f_i}}. The target position of \ilmath{l_{i,k}} is simply \ilmath{M - 1} steps above its start position. Note the literal robots can wait for up to one timestep.
+
+
+	Denote the target position of \ilmath{l_{i,1}} as \ilmath{t_{i,1} \parens{= \alpha \cdot i + \beta \cdot j_1 + \gamma + \phi \cdot f_i}} for a moment. Set the start and target positions of the clause robot \ilmath{c_i} to \ilmath{t_{i,1} + \coord{M - 5}{-1}} and \ilmath{t_{i,1} - \coord{3}{3}} respectively. Note that the clause robot has to move \ilmath{M - 2} steps to the left and \ilmath{2} steps down and cannot wait, so it requires a clear path towards its target to make it within makespan \ilmath{M}.
 	
+	Note the importance of the two diagonals for robot-robot timings here: they are reminiscent of the eigenvectors of a matrix. Repositioning the literal robot along the downwards \diagdegs diagonal, the timing with respect to the variable robots, which move to the right, does not change, only the horizontal intersection of their paths, i.e. the two robots will still collide just the same. Similarly, repositioning the literal robot along the upwards diagonal does not change its timing with respect to a clause robot, which start at the top and move left. 
+
+	Now, onto explaining the specificity of the literal robot positioning. As hinted above, the position of the literal robots \ilmath{\set{l_{i,1},\ l_{i,2},\ l_{i,3}}} are each individually close to the downwards diagonal starting at their corresponding variable robot \ilmath{r_{j_k}}, which the offset \ilmath{\beta \cdot j_k} takes care of. Among themselves, they are also close to the same upwards diagonal, which times them correctly with respect to their clause robot. The offset \ilmath{\alpha \cdot i} puts them at the same diagonal, separating them from the literals of the clauses \ilmath{c_{i-1} \text{ and } c_{i+1}}. Finally, \ilmath{\gamma \cdot k} staggers the three literals such that \ilmath{l_{i,3}} is one step ahead of \ilmath{l_{i,2}}, which is one step ahead of \ilmath{l_{i,1}} (w.r.t the clause robot \ilmath{c_i}). This, combined with the specific positioning of \ilmath{c_i}, makes it so \ilmath{c_i} has three separate paths, which are individually blocked by its three literals when their respective variables are mismatched.
+
+	The purely vertical negative offset \ilmath{\phi} when \ilmath{C_i} is all-negative results in \ilmath{l_{i,k}} going from `colliding' with a \false\ \ilmath{r_{j_k}} to `colliding' when \ilmath{r_{j_k} = \true}. All literal robots \ilmath{l_{i,k}} and the clause robot \ilmath{c_i} get this same offset, so their relative timings are unaffected.
+	
+	The only thing left is determining the critical makespan \ilmath{M}: all literal robots have to fit in between the left and right auxiliary-robots, while all variable robots should fit in the span of all the literal robots, with some room to spare for the lowest clause robot \ilmath{c_m}.
+
+	\begin{align*}
+		& M = \max \parens{
+			\underbrace{3nm + 2n + 1}_{\text{Space for \ilmath{l_{m,3}} and aux.}}, \qquad
+			\underbrace{3nm + 4n + 4}_{\text{Space for \ilmath{r_n} and \ilmath{c_m} within span of \ilmath{l_{i,1}}}}
+		} \\
+		\Rightarrow & M = 3nm + 4n + 4 \quad \text{is sufficient}
+	\end{align*}
+
+	As a result of this construction, an arbitrary Monotone 3SAT problem can be simulated with coordinated robots on a grid. A makespan of \ilmath{M = 3nm + 4n + 4} is achievable if and only if every clause robot has a clear path, implying they all have at least one satisfied literal. This implies \ilmath{\varphi} is satisfiable if and only if there is a schedule with makespan \ilmath{M} that transforms the workspace from \ilmath{\conf{s} \rightarrow \conf{t}}.
+\end{proof}
+
+
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=10cm]{ipe/variable_and_first_aux.eps}
-	\caption{A minimal example of an unsolvable motion planning problem: there exists no valid schedule which swaps the green and blue robots.}\label{fig:reachability}
+	\includegraphics[height=15cm]{ipe/minimal_ex.eps}
+	\caption{A minimal Monotone 3CNF formula \ilmath{\varphi = \parens{b_1 \lor b_2 \lor b_3}} reduced to a robot motion planning problem. The dark red graphics show how the robots would be offset were it an all-negative clause. Disks represent robots while crosses represent their target positions. The circles represent the potential collisions that couple the variables \ilmath{r_j} to the clauses \ilmath{c_i} via the literal robots \ilmath{l_{i,k}}.}\label{fig:reachability}
 \end{figure}
-
-	\note{very WIP here onwards}
-	For each clause \ilmath{C_i = \set{ b_{j_1}, b_{j_2}, b_{j_3} }}, let us have three corresponding \emph{checker robots} \ilmath{\set{\checker{1}, \checker{2}, \checker{3}}} checking their respective literal, and one \emph{clause robot} checking that at least one checker robot evaluates to \true\ for that clause. Let each checker robot start diagonally downwards from its respective variable robot, and move in the positive \ilmath{xy}-direction towards its target, across the path of the variable robot. Let it be positioned so that it has to wait for the variable robot for one timestep iff the assignment of the variable robot is mismatched with the literal. 
-
-
-
-
-	If it corresponds to a positive literal, \ilmath{position} otherwise. Let each checker robot have a target position of \ilmath{start + offset}. This means the checker robot has to pass by its corresponding variable robot, and wait for one timestep if and only if the variable assignment is a mismatch with respect to the literal. 
-
-	,  Let their start positions be defined as \ilmath{\alpha_{i_k} \coloneqq}.
-
-
-
-	\vdots 
-
-	It is thus possible to reduce \texttt{Monotone 3SAT} into a parallel motion planning problem of finding a minimum makespan, which implies minimum makespan parallel motion planning is NP-hard.
- 
-\end{proof}
-
-\begin{corollary}
-	Computing a minimum makespan schedule for a given motion planning problem is NP-hard.
-\end{corollary}
-
-\begin{proof}
-	The decision problem formulation of the same problem is shown to be NP-complete. It can trivially be reduced to the problem of finding a minimum makespan schedule, as finding a minimum makespan schedule would solve our decision problem. 
-\end{proof}

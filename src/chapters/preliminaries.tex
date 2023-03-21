@@ -25,7 +25,7 @@ Denote a single transformation step as \ilmath{\conf{1} \rightarrow \conf{2}}. A
 
 % PROBLEM DEFINITION
 \begin{definition}\label{def:motion_planning_problem}
-	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, the \emph{motion planning problem} asks to find a \emph{schedule} that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
+	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, the \emph{motion planning problem} ask to find a \emph{schedule} that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
 \end{definition}
 
 \begin{remark}\label{remark:reachability}
@@ -44,6 +44,7 @@ Denote a single transformation step as \ilmath{\conf{1} \rightarrow \conf{2}}. A
 \end{definition}
 
 \begin{definition}\label{def:optimality}
+Let \ilmath{\Sigma_{s \rightarrow t}} denote the set of all valid schedules for some pair of configurations \ilmath{\conf{s}} and \ilmath{\conf{t}}.
 	A schedule \ilmath{S_\text{opt}} is \emph{optimal} with respect to some cost function \ilmath{f : S \rightarrow \mathbb{N}} mapping all valid schedules \ilmath{S} to some integer value if and only if \ilmath{f(S) \geq f(\sopt)} for all such valid schedules \ilmath{S}.
 \end{definition}
 

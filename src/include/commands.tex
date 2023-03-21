@@ -6,12 +6,12 @@
 \newcommand{\note}[1]{{\color{purple} \emph{#1} }}
 
 % math commands
-\newcommand{\rsquared}{{ \mathbb{R}^2 }}
+\newcommand{\rsquared}{{ \ensuremath{\mathbb{R}^2 }}}
 % \newcommand{\nngrid}{{ n_{1}n_{2} }}
-\newcommand{\nngrid}{{ n_{1}n_{2} }}
+\newcommand{\nngrid}{{ \ensuremath{n_{1}n_{2}} }}
 
 % a configuration C is a mapping ...
-\newcommand{\conf}[1]{\mathcal{C}_{#1}}
+\newcommand{\conf}[1]{\ensuremath{\mathcal{C}_{#1}}}
 % inverse of a configuration
 \newcommand{\iconf}[2]{\conf{#1}^{-1}(#2)}
 % normal configuration with (#2)
@@ -28,8 +28,12 @@
 \newcommand{\true}{\texttt{true}}
 \newcommand{\false}{\texttt{false}}
 
-\newcommand{\checker}[1]{c_{i_#1}}
+\newcommand{\colvec}[2]{\ensuremath{\begin{pmatrix}
+			#1 \\
+			#2
+\end{pmatrix}}}
 
+\newcommand{\diagdegs}{\ensuremath{45^\circ\ }}
 
 % inline math
 \newcommand{\ilmath}[1]{\( #1 \)}
