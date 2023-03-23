@@ -3,7 +3,7 @@
 \cite{siamcomp/DemaineFKMS19} \cite{corr/YuL15c}
 
 % PRELIMINARIES
-\subsection{Preliminaries}
+\subsection{Theorem-specific preliminaries}
 
 A (deterministic) \emph{Turing Machine} (TM) is a mathematically modeled machine capable of general purpose computations operating on a tape of symbols. It is generally considered to be equivalent in capabilities to most mathematical definitions of computation \cite{aw/HopcroftU79}. See \cite{aw/HopcroftU79} for a formal definition.
 
@@ -54,18 +54,18 @@ The following is an example of a boolean expression:
 
 Let a \emph{literal} be a variable \ilmath{b} (a positive literal) or the negation of a variable \ilmath{\neg b} (a negative literal). A (disjunctive) \emph{clause} is then defined as a disjunction of literals \ilmath{C = \parens{l_1 \lor l_2 \lor \dots \lor l_k}, \ l_i \in \set{b_j,\ \neg b_j}}. 
 
-Let a boolean expression be in \emph{Conjunctive Normal Form} (CNF) if and only if it is composed only of adjunctions of disjunctive clauses. The previous example in \cref{ex:boolean_xor} is \emph{not} in CNF, as negation of a clause is not allowed, and the second parenthesis is an adjunction, not a disjunction.
+Let a boolean expression be in \emph{Conjunctive Normal Form} (CNF) if and only if it is composed only of conjunctions of disjunctive clauses. The previous example in \cref{ex:boolean_xor} is \emph{not} in CNF, as negation of a clause is not allowed, and the second parenthesis is a conjunction, not a disjunction.
 
 \begin{remark}
-	It is always possible, but non-trivial, to transform an arbitrary boolean expression into CNF \cite{?}. The expression in \cref{ex:boolean_xor} can be stated in CNF as follows:
+	It is always possible, but non-trivial, to transform an arbitrary boolean expression into CNF \cite{?} \note{find source?}. The expression in \cref{ex:boolean_xor} can be stated in CNF as follows:
 	\begin{align}\label{ex:cnf_xor}
 		\parens{b_1 \lor b_2} \land \parens{\neg b_1 \lor \neg b_2}
 	\end{align}
 \end{remark}
 
-Let \ilmath{\varphi} be a boolean expression in Conjunctive Normal Form. The boolean satisfiability problem, abbreviated \emph{SAT}, is a decision problems asking whether \ilmath{\varphi} can be evaluated to \true\ for some state of its variables \ilmath{\set{b_1, b_2, \dots, b_n} \in \set{\true, \false}^{n}}. It is trivial to verify if a solution is correct or not: a boolean expression can be evaluated well within polynomial time, thus SAT has to be in NP. On the other hand, there are an exponential amount of states of the input variables: \ilmath{2^n} states for the \ilmath{n} input variables to be exact. It has been proven that SAT is NP-complete, and a sub-exponential algorithm for solving a general SAT problem would indeed be groundbraking. 
+Let \ilmath{\varphi} be a boolean expression in Conjunctive Normal Form. The boolean satisfiability problem, abbreviated \emph{SAT}, is a decision problems asking whether \ilmath{\varphi} can be evaluated to \true\ for some state of its variables \ilmath{\set{b_1, b_2, \dots, b_n} \in \set{\true, \false}^{n}}. It is trivial to verify if a solution is correct or not: a boolean expression can be evaluated well within polynomial time, thus SAT has to be in NP. On the other hand, there are an exponential amount of states of the input variables: \ilmath{2^n} states for the \ilmath{n} input variables to be exact. It has been proven that SAT is NP-complete, and a sub-exponential algorithm for solving a general SAT problem would be groundbraking. 
 
-The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether it is satisfiable. This particular expression is satisfiable, as when \ilmath{\coord{b_1}{b_2} = (\true, \false)} or \ilmath{\coord{b_1}{b_2} = \coord{\false}{\true}} the expression evaluates to \true, coincidentally equivalent to an \texttt{xor}\ expression.
+The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether \ilmath{\varphi} is satisfiable. This particular expression is satisfiable, as when \ilmath{\coord{b_1}{b_2} = (\true, \false)} or \ilmath{\coord{b_1}{b_2} = \coord{\false}{\true}} the expression evaluates to \true, coincidentally equivalent to an \texttt{xor}\ expression.
 
 \begin{definition}
 	Let \emph{3SAT} be a subset of SAT, such that any problem in 3SAT has exactly 3 literals in each clause. 3SAT is also known to be NP-complete.
@@ -90,7 +90,7 @@ The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether it is satis
 
 \note{should this be in preliminaries?}
 
-Let a decision problem formulation of minimum makespan motion planning be as follows: Given start and end configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively, determine if there exists a schedule that can transform \ilmath{\conf{s} \rightarrow \conf{t}} with makespan at most \emph{M}.
+Let a decision problem formulation of minimum makespan motion planning be as follows: Given start and end configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively, determine if there exists a schedule with makespan at most \emph{M} that can transform \ilmath{\conf{s} \rightarrow \conf{t}}.
 
 \begin{lemma}\label{lemma:np}
 	The decision problem formulation of a minimum makespan motion planning problem on a grid is in NP.
@@ -116,11 +116,19 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 	The following proof, heavily based on the proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3SAT} to a decision formulation of a coordinated multi-robot motion planning problem. As Monotone 3SAT is known to be NP-complete, a polynomial reduction implies the reduced problem is NP-hard. Together with \cref{lemma:np}, this implies the problem is also NP-complete. 
 
 	\subsubsection*{The reduction} 
-	Let \ilmath{\varphi} be some boolean expression corresponding to some Monotone 3SAT problem. The idea is to construct a workspace with robots having start and target configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively such that a critical makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise requiring \ilmath{M + 1} transformation steps at a minimum to transform \ilmath{\conf{s} \rightarrow \conf{t}}. 
+	Let \ilmath{\varphi} be some boolean expression corresponding to some Monotone 3SAT problem. The idea is to construct a workspace with robots having start and target configurations \ilmath{\conf{s}} and \ilmath{\conf{t}} respectively such that a critical makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise requiring \ilmath{M + 1} transformation steps at a minimum to transform \ilmath{\conf{s} \rightarrow \conf{t}}. Follow along the construction by observing \cref{fig:full_reduction}: a one-to-one sketch of the simplest possible example. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=15cm]{ipe/minimal_ex.eps}
+	\caption{
+		A minimal Monotone 3CNF formula \ilmath{\varphi = \parens{b_1 \lor b_2 \lor b_3}} reduced to a robot motion planning problem. The dark red graphics show how the robots would be offset were it an all-negative clause. Disks represent robots while crosses represent their target positions. The circles highlight the variable-literal couplings and literal-clause couplings: a mismatched assignment of \ilmath{b_{j_k}} w.r.t. \ilmath{l_{i,k}} cascades into \ilmath{l_{i,k}} blocking the path of \ilmath{c_i}.
+	}\label{fig:full_reduction}
+\end{figure}
 
 	% Let our target makespan \emph{M} be fixed at the end of the construction, so that a schedule with makespan \emph{M} is achievable if and only if the original expression \ilmath{\varphi} is satisfiable, otherwise a schedule with makespan \ilmath{M + 1}. 
 
-	The formula \ilmath{\varphi} is composed of \ilmath{n} boolean variables \ilmath{\set{b_1, b_2, \dots, b_n}} and \ilmath{m} clauses \ilmath{\set{C_1, C_2, \dots, C_m}} with three literals each. Let our variables be represented by \ilmath{n} \emph{variable robots} \ilmath{\set{r_1, r_2, \dots, r_n}}. These will be able to `choose' one of two paths independently of one another, representing \true\ and \false\ assignments to them. The variable robots are coupled in a one-to-many mapping to the clauses by \ilmath{3m} \emph{literal robots}: \ilmath{\set{l_{i,k} \mid i \in \set{1, \dots, m},\ k \in \set{1, 2, 3}}}. They are positioned so that they pass by their corresponding variable robot, and have to wait if the variable assignment is mismatched with the literal. There are finally \ilmath{m} \emph{clause robots} to ensure that at least one literal per simulated clause evaluates to \true. This is accomplished by the clause robot having a clear path to its target only if at least one corresponding literal robot has not needed to wait for its variable robot. The workspace is constructed so that any robot deviating from its constrained path results in a schedule with makespan \ilmath{> M}.
+	The formula \ilmath{\varphi} is composed of \ilmath{n} boolean variables \ilmath{\set{b_1, b_2, \dots, b_n}} and \ilmath{m} clauses \ilmath{\set{C_1, C_2, \dots, C_m}} with three literals each. Let our variables be represented by \ilmath{n} \emph{variable robots} \ilmath{\set{r_1, r_2, \dots, r_n}}. These will be able to `choose' one of two paths independently of one another, representing \true\ and \false\ assignments to them. The variable robots are coupled in a many-to-many mapping to the clauses by \ilmath{3m} \emph{literal robots}: \ilmath{\set{l_{i,k} \mid i \in \set{1, \dots, m},\ k \in \set{1, 2, 3}}}. They are positioned so that they pass by their corresponding variable robot, and have to wait if the variable assignment is mismatched with the literal. There are finally \ilmath{m} \emph{clause robots} to ensure that at least one literal per simulated clause evaluates to \true. This is accomplished by the clause robot having a clear path to its target only if at least one corresponding literal robot has not needed to wait for its variable robot. The workspace is constructed so that any robot deviating from its constrained path results in a schedule with makespan \ilmath{> M}.
 
 	% is made so a makespan \ilmath{M} is only achievable if every clause robot is not blocked by a literal robot on its path, and all robots are constrained by the makespan to behave like .
 
@@ -147,7 +155,7 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 	Now, onto explaining the specificity of the literal robot positioning. As hinted above, the position of the literal robots \ilmath{\set{l_{i,1},\ l_{i,2},\ l_{i,3}}} are each individually close to the downwards diagonal starting at their corresponding variable robot \ilmath{r_{j_k}}, which the offset \ilmath{\beta \cdot j_k} takes care of. Among themselves, they are also close to the same upwards diagonal, which times them correctly with respect to their clause robot. The offset \ilmath{\alpha \cdot i} puts them at the same diagonal, separating them from the literals of the clauses \ilmath{c_{i-1} \text{ and } c_{i+1}}. Finally, \ilmath{\gamma \cdot k} staggers the three literals such that \ilmath{l_{i,3}} is one step ahead of \ilmath{l_{i,2}}, which is one step ahead of \ilmath{l_{i,1}} (w.r.t the clause robot \ilmath{c_i}). This, combined with the specific positioning of \ilmath{c_i}, makes it so \ilmath{c_i} has three separate paths, which are individually blocked by its three literals when their respective variables are mismatched.
 
-	The purely vertical negative offset \ilmath{\phi} when \ilmath{C_i} is all-negative results in \ilmath{l_{i,k}} going from `colliding' with a \false\ \ilmath{r_{j_k}} to `colliding' when \ilmath{r_{j_k} = \true}. All literal robots \ilmath{l_{i,k}} and the clause robot \ilmath{c_i} get this same offset, so their relative timings are unaffected.
+	The purely vertical negative offset \ilmath{\phi} when \ilmath{C_i} is all-negative results in \ilmath{l_{i,k}} going from `colliding' with a \false\ \ilmath{r_{j_k}} to `colliding' when \ilmath{r_{j_k} = \true}. All literal robots \ilmath{l_{i,k}} and the clause robot \ilmath{c_i} that correspond to clause \ilmath{C_i} get this same offset, so their relative timings are unaffected.
 	
 	The only thing left is determining the critical makespan \ilmath{M}: all literal robots have to fit in between the left and right auxiliary-robots, while all variable robots should fit in the span of all the literal robots, with some room to spare for the lowest clause robot \ilmath{c_m}.
 
@@ -163,11 +171,6 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 \end{proof}
 
 
-Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS19}, this construction works with a smaller makespan: \ilmath{3nm + 4n + 4} versus \ilmath{6n(m + 2)} for \cite{siamcomp/DemaineFKMS19}. The number of used robots is also much smaller: \ilmath{3n + 4m} robots compared to \ilmath{3n + 3m + 6n(m + 2)} robots in the original. 
+Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS19}, this construction works with a smaller makespan: \ilmath{3nm + 4n + 4} versus \ilmath{6n(m + 2)} for the proof in \cite{siamcomp/DemaineFKMS19}. The number of needed robots is also significantly smaller: \ilmath{3n + 4m} robots compared to \ilmath{3n + 3m + 6n(m + 2)} robots in the original. 
 
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[height=15cm]{ipe/minimal_ex.eps}
-	\caption{A minimal Monotone 3CNF formula \ilmath{\varphi = \parens{b_1 \lor b_2 \lor b_3}} reduced to a robot motion planning problem. The dark red graphics show how the robots would be offset were it an all-negative clause. Disks represent robots while crosses represent their target positions. The circles represent the potential collisions that couple the variables \ilmath{r_j} to the clauses \ilmath{c_i} via the literal robots \ilmath{l_{i,k}}.}\label{fig:reachability}
-\end{figure}
