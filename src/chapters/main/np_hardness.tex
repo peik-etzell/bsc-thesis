@@ -1,4 +1,4 @@
-\section{The general minimum makespan parallel motion planning problem on a grid is NP-hard}
+\section{The general minimum makespan parallel motion planning problem on a grid is NP-hard}\label{chapter:main_proof}
 
 \cite{siamcomp/DemaineFKMS19} \cite{corr/YuL15c}
 
@@ -87,8 +87,6 @@ The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether \ilmath{\va
 
 % MAIN THEOREM
 \subsection{The theorem}
-
-\note{should this be in preliminaries?}
 
 Let a decision problem formulation of minimum makespan motion planning be as follows: Given a problem instance \ilmath{I \coloneqq \parens{G,\ \conf{s},\ \conf{t}}}, determine if there exists a schedule with makespan at most \emph{M} that can transform \ilmath{\conf{s} \rightarrow \conf{t}}.
 
@@ -187,5 +185,20 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 
 Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS19}, this construction works with a smaller makespan: \ilmath{3nm + 4n + 4} versus \ilmath{6n(m + 2)} for the proof in \cite{siamcomp/DemaineFKMS19}. The number of needed robots is also significantly smaller: \ilmath{3n + 4m} robots compared to \ilmath{3n + 3m + 6n(m + 2)} robots in the original. 
+
+\begin{corollary}
+	The problem of computing a \emph{minimum} makespan schedule for a given problem instance is as hard as the corresponding decision problem. 
+\end{corollary}
+
+\begin{proof}
+	Assume that there exists an efficient solution to the minimum makespan problem: it would trivially solve the decision problem efficiently. This implies the minimum makespan problem has to be at least as hard as the decision problem. 
+
+	
+	Assume instead there exists an algorithm \ilmath{A} that solves the decision problem. It has runtime \ilmath{T(A)}. \cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \ilmath{O(n_1 + n_2)}. Thus, repeatedly applying \ilmath{A} for makespans \ilmath{\set{1, 2, \dots, O(n_1 + n_2)}} would solve the minimum makespan problem within \ilmath{O(T(A) \cdot (n_1 + n_2) )} time. This is exponential if \ilmath{T(A)} is exponential, polynomial if \ilmath{T(A)} is polynomial. Thus the minimum makespan problem is not harder than the decision problem. 
+
+	This proves the minimum makespan problem has to be as hard as the corresponding decision problem.
+\end{proof} 
+
+Classifying the complexity of parallel robot motion planning as NP-complete is important, as it shows that it is unfeasible to compute an optimal schedule for sufficiently large problem instances. This implies that real world use requires efficient approximation algorithms.
 
 
