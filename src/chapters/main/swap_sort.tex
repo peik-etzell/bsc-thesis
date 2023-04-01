@@ -1,5 +1,6 @@
 \section{Constant stretch transformations}\label{chapter:constant_stretch}
 
+\fda{edit this section as discussed in the meeting}
 \subsection{Some preliminaries}
 
 Consider two nodes \ilmath{v,\ w \in V}. Let the \emph{infinity norm} be defined as \ilmath{L_\infty = \linfty{v - w} \coloneqq \max\parens{\abs{v_x - w_x},\ \abs{v_y - w_y}}}. Let \ilmath{d \coloneqq \max_{r \in R}\parens{\linfty{\iconf{s}{r} - \iconf{t}{r}}}}. Note that \ilmath{\linfty{v - w} \leq \manhattan{v - w} \leq 2\cdot \linfty{v - w}}.
@@ -27,7 +28,7 @@ Given a \ilmath{2 \times 3} (or \ilmath{3 \times 2}) rectangle with up to six ro
 
 \subsection{Utilizing subflows to gain constant stretch}
 
-Building upon the previous findings, \cite{siamcomp/DemaineFKMS19} further details an algorithm for achieving a \emph{constant stretch factor} for arbitrary start and target configurations. By subdividing the workspace into fairly large but \ilmath{O(d)} sized tiles, any transformations that is within such a tile can be done in linear time w.r.t. the maximum horizontal or vertical distance, due to the previous findings with Rotatesort. They show that \ilmath{O(d)} non-intersecting \emph{subflows} can be used to swap robots between tiles efficiently, using \ilmath{O(d)} transformation steps.
+Building upon the previous findings, \cite{siamcomp/DemaineFKMS19} further details an algorithm for achieving a \emph{constant stretch factor} for arbitrary start and target configurations. By subdividing the workspace into fairly large but \ilmath{O(d)} sized tiles, any transformations that is within such a tile can be done in linear time w.r.t. \fda{adjust the spacing here and everywhere else} the maximum horizontal or vertical distance, due to the previous findings with Rotatesort. They show that \ilmath{O(d)} non-intersecting \emph{subflows} can be used to swap robots between tiles efficiently, using \ilmath{O(d)} transformation steps.
 
 Preprocessing the tiles to be compatible with non-intersecting subflows means swapping some robots between tiles. Otherwise, diagonally neighboring tiles would have robots going both ways, crossing paths. \cite{siamcomp/DemaineFKMS19} shows that this preprocessing is possible to do in \ilmath{O(d)} steps. 
 

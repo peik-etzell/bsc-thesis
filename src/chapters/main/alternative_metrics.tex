@@ -18,10 +18,11 @@ Consider the following well-defined cost functions:
 \begin{align}\label{eq:metric_tuple}
 	\forall \parens{f_1,\ f_2} \in \set{\mono{M, TAT, TD, MD}}^2 : \exists I : \schedules_{\text{opt}_{f_1}} \cup \schedules_{\text{opt}_{f_2}} = \emptyset
 \end{align}
+\fda{maybe intersection \(\schedules_{\text{opt}_{f_1}} \cap \schedules_{\text{opt}_{f_2}}\)?}
 Where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of optimal schedules for an instance \ilmath{I} with respect to some cost function \ilmath{f}. That \cref{eq:metric_tuple} is true on a general graph does not imply that it holds for our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model. However, by coming up with new grid-specific problem instances we prove the statement holds on the grid as well.
 
 \begin{lemma}\label{lemma:simultaneous_1}
-	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} cannot always be simultaneously optimized for on the grid. 
+	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} cannot always be simultaneously optimized for on the grid. \fda{for on?}
 \end{lemma}
 
 \begin{proof}
@@ -36,7 +37,7 @@ Where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of
 		\label{fig:sim1}
 	\end{figure}
 
-	Observe the configuration in \cref{fig:sim1}. It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total travel time and distance instead. See \cref{fig:sim1_strat} for a visual of this. 
+	Observe the configuration in \cref{fig:sim1}. \fda{what does it mean to have an x inside the circles? I got it but explain it better} It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total travel time and distance instead. See \cref{fig:sim1_strat} for a visual of this. 
 
 	% FIGURE SIMULTANEOUS 1 STRATEGIES
 	\begin{figure}[h]
@@ -95,4 +96,6 @@ It is quite trivial to conclude that there are no better solutions to this insta
 
 	Consider the graphs in \cref{fig:sim_separate} that show which cost functions are sometimes pairwise simultaneously unoptimizable. A new graph with the same vertices and a union of the edges clearly gives us a 4-clique, which is exactly what we are after. This implies the general proof from \cite{corr/YuL15c} also holds on the grid.
 \end{proof}
+
+\fda{well done!}
 

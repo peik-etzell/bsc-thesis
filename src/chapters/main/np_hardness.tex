@@ -5,15 +5,17 @@
 % PRELIMINARIES
 \subsection{Theorem-specific preliminaries}
 
-A (deterministic) \emph{Turing Machine} (TM) is a mathematically modeled machine capable of general purpose computations operating on a tape of symbols. It is generally considered to be equivalent in capabilities to most mathematical definitions of computation \cite{aw/HopcroftU79}. See \cite{aw/HopcroftU79} for a formal definition.
+A (deterministic) \emph{Turing Machine} (TM) is a mathematically modeled machine capable of general purpose computations operating on a tape of symbols. It is generally considered to be equivalent in capabilities to most mathematical definitions of computation \cite{aw/HopcroftU79}. See \cite{aw/HopcroftU79} for a formal definition. \fda{cite \cite{aw/HopcroftU79} only once}
 
 Let a computational problem asking a yes/no question based on some input be called a \emph{decision problem}.
+\fda{you are not defining it: a decision problem is already defined.
+Hence, I would say simply  ``a decision problem is a computational problem where ...''}
 
-There are different \emph{classes} of computational problems in terms of computational complexity. The \emph{P}-class of problems is defined as the set of decision problems solvable by a TM in \emph{polynomial time}, i.e. in \ilmath{O(n^k)} time on the size of the input \emph{n} and some constant \emph{k}.
+There are different \emph{classes} of computational \fda{decision?} problems in terms of computational complexity. The \emph{P}-class of problems is defined as the set of decision problems solvable by a TM in \emph{polynomial time}, i.e. \fda{after any dot, latex put a larger spacing automatically: to remove it, add a \textbackslash: i.e.\ see my code} in \ilmath{O(n^k)} time on the size of the input \emph{n} and some constant \emph{k}.
 
 The \emph{NP}-class of problems is defined as the set of decision problems that are \emph{verifiable} by a TM in polynomial time. Actually finding a solution to an NP-problem might take considerably longer. It remains an important open question whether P is or is not equal to NP, but many believe P is a proper subset of NP.
 
-A transformation of a problem \ilmath{B} into another problem \ilmath{A} such that a solution to \ilmath{A} solves \ilmath{B} is called a \emph{reduction} and is commonly denoted \ilmath{B \leq A}. If the reduction can be done in polynomial time, it can be denoted \ilmath{B \leq_p A}.
+A transformation of a problem \ilmath{B} into another problem \ilmath{A} \fda{you are using the same symbol you used for algorithm...} such that a solution to \ilmath{A} solves \ilmath{B} is called a \emph{reduction} and is commonly denoted \ilmath{B \leq A}. If the reduction can be done in polynomial time, it can be denoted \fda{I would just say ``we write''} \ilmath{B \leq_p A}.
 
 \begin{definition}\label{def:np_complete}
 	A decision problem \emph{A} is \emph{NP-complete} (\ilmath{A \in \text{NPC}}) if and only if \emph{A} is in NP and there exists a polynomial time reduction from every problem in NP to \emph{A}:
@@ -42,7 +44,7 @@ A transformation of a problem \ilmath{B} into another problem \ilmath{A} such th
 \end{remark}
 
 \begin{remark}\label{note:npc_proving}
-	Let \ilmath{A} be some known NP-complete problem. If there is a polynomial time reduction from \ilmath{A} to some other problem \ilmath{B}: \ilmath{A \leq_p B}, we know that \ilmath{B} is NP-hard. Further proving that \ilmath{B} is NP-complete would require \emph{either} a polynomial reduction from \ilmath{B} to \ilmath{A}: \ilmath{B \leq_p A} \emph{or}, possibly easier, proving that \ilmath{B} is in NP; proving that \ilmath{B} is deterministically verifiable in polynomial time.
+	Let \ilmath{A} be some known NP-complete problem. If there is a polynomial time reduction from \ilmath{A} to some other problem \ilmath{B}: \ilmath{A \leq_p B}, we know that \ilmath{B} is NP-hard. Further proving that \ilmath{B} is NP-complete would require \emph{either} a polynomial reduction from \ilmath{B} to \ilmath{A}: \ilmath{B \leq_p A} \emph{or}, possibly easier, proving that \ilmath{B} is in NP; \fda{no semicolon, I would write ``,that is, or i.e.''} proving that \ilmath{B} is deterministically verifiable in polynomial time.
 \end{remark}
 
 Let a \emph{boolean expression} be composed of boolean variables \ilmath{b \in \set{\true,\, \false}}, negations (\texttt{not } \ilmath{\neg}), conjunctions (\texttt{and} \ilmath{\land}), disjunctions (\texttt{or} \ilmath{\lor}) and parentheses.
@@ -63,16 +65,17 @@ Let a boolean expression be in \emph{Conjunctive Normal Form} (CNF) if and only 
 	\end{align}
 \end{remark}
 
-Let \ilmath{\varphi} be a boolean expression in Conjunctive Normal Form. The boolean satisfiability problem, abbreviated \emph{SAT}, is a decision problems asking whether \ilmath{\varphi} can be evaluated to \true\ for some state of its variables \ilmath{\set{b_1, b_2, \dots, b_n} \in \set{\true, \false}^{n}}. It is trivial to verify if a solution is correct or not: a boolean expression can be evaluated well within polynomial time, thus SAT has to be in NP. On the other hand, there are an exponential amount of states of the input variables: \ilmath{2^n} states for the \ilmath{n} input variables to be exact. It has been proven that SAT is NP-complete, and a sub-exponential algorithm for solving a general SAT problem would be groundbraking. 
+Let \ilmath{\varphi} be a boolean expression in Conjunctive Normal Form. The boolean satisfiability problem, abbreviated \emph{SAT}, is a decision problems asking whether \ilmath{\varphi} can be evaluated to \true\ for some state of its variables \ilmath{\set{b_1, b_2, \dots, b_n} \in \set{\true, \false}^{n}}. It is trivial to verify if a solution is correct or not: a boolean expression can be evaluated well within polynomial time, thus SAT has to be in NP. On the other hand, there are an exponential amount of states of the input variables: \ilmath{2^n} states for the \ilmath{n} input variables to be exact. It has been proven that SAT is NP-complete \fda{see Cook–Levin theorem, and cite it}, and a sub-exponential algorithm for solving a general SAT problem would be groundbraking \fda{groundbreaking}. 
 
 The corresponding SAT problem to \cref{ex:cnf_xor} would ask whether \ilmath{\varphi} is satisfiable. This particular expression is satisfiable, as when \ilmath{\coord{b_1}{b_2} = (\true, \false)} or \ilmath{\coord{b_1}{b_2} = \coord{\false}{\true}} the expression evaluates to \true, coincidentally equivalent to an \texttt{xor}\ expression.
 
 \begin{definition}
 	Let \emph{3SAT} be a subset of SAT, such that any problem in 3SAT has exactly 3 literals in each clause. 3SAT is also known to be NP-complete.
+	\fda{I would rephrase the definition: ``3SAT'' is a sub-problem of SAT where each input instance has clauses with exactly 3 literals (or something similar)}
 \end{definition}
 
 \begin{definition}
-	A \emph{Monotone 3SAT} is defined as a further restricted version of 3SAT, such that each clause of the expression has all-positive or all-negative literals. 
+	A \emph{Monotone 3SAT} is defined as a further restricted version of 3SAT, such that \fda{where} each clause of the expression has all-positive or all-negative literals. 
 \end{definition}
 
 % Boolean expressions are constructed from positive and negative literals (\ilmath{x} and \ilmath{\neg x} respectively), conjunctions (AND \ilmath{\land}), disjunctions (OR \ilmath{\lor}) and parentheses. An example SAT problem would ask whether \ilmath{}
@@ -95,13 +98,14 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 \end{lemma}
 
 \begin{proof}
-	It is also easy to show that the decision problem is in NP; to verify a found solution, one has to check three things:
+	It is also \fda{why ``also''?} easy to show that the decision problem is in NP; to verify a found solution, one has to check three things:
 	\begin{enumerate}
 		\item Every transformation step of a schedule should be valid according to \cref{req:limited_movement} and \cref{req:no_swaps}.\label{checks:transformations}
 		\item After the last step of execution, the configuration should equal that of \ilmath{\conf{t}}.\label{checks:target_acquired}
 		\item There should be at most \ilmath{M} transformation steps.\label{checks:makespan}
 	\end{enumerate}
-	\cref{req:limited_movement} can be checked in linear time with respect to the robots for each timestep. \cref{req:no_swaps} will need to be checked for each single-robot move, which is bounded by the number of robots for each timestep. Thus \cref{checks:transformations} can be checked in \ilmath{O(m\cdot n)} time, where \ilmath{m} is the makespan and \ilmath{n} is the number of robots. \cref{checks:target_acquired} can be done linearly with respect to the number of robots, as checking the positions for every robot is sufficient (configurations are assumed to be valid, and that \ilmath{\iconf{}{r}} would raise an error if the mapped position would not be deterministically defined). Trivially \cref{checks:makespan} can be done in constant time. 
+	\cref{req:limited_movement} can be checked in linear time with respect to the robots for each timestep. \cref{req:no_swaps} will need to be checked for each single-robot move, which is bounded by the number of robots for each timestep. Thus \cref{checks:transformations} can be checked in \ilmath{O(m\cdot n)} time, where \ilmath{m} is the makespan and \ilmath{n} is the number of robots. \cref{checks:target_acquired} can be done linearly with respect to the number of robots, as checking the positions for every robot is sufficient (configurations are assumed to be valid, and that \ilmath{\iconf{}{r}} would raise an error if the mapped position would not be deterministically defined). Trivially \cref{checks:makespan} can be done in constant time \fda{I think in time \(\mathcal{O}(M)\)?}. 
+	\fda{be careful, because items 1 and 2 need also to be repeated for at most \(M\) times: it needs to be added in the final running time}
 
 	A solution is thus verifiable in polynomial time, which implies the problem is in NP by definition.
 \end{proof}
@@ -131,7 +135,7 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 	\centering
 	\includegraphics[height=15cm]{ipe/np_reduction.eps}
 	\caption{
-		A minimal Monotone 3CNF formula \ilmath{\varphi = \parens{b_1 \lor b_2 \lor b_3}} reduced to a robot motion planning problem. The dark red graphics show how the robots would be offset were it an all-negative clause. Disks represent robots while crosses represent their target positions. The circles highlight the variable-literal couplings and literal-clause couplings: a mismatched assignment of \ilmath{b_{j_k}} w.r.t. \ilmath{l_{i,k}} cascades into \ilmath{l_{i,k}} blocking the path of \ilmath{c_i}.
+		A minimal Monotone 3CNF formula \ilmath{\varphi = \parens{b_1 \lor b_2 \lor b_3}} reduced to a robot motion planning problem. The dark red graphics show how the robots would be offset were \fda{?? I did not understand the sentence} it an all-negative clause. Disks represent robots while crosses represent their target positions. The circles highlight the variable-literal couplings and literal-clause couplings: a mismatched assignment of \ilmath{b_{j_k}} w.r.t. \ilmath{l_{i,k}} cascades into \ilmath{l_{i,k}} blocking the path of \ilmath{c_i}.
 	}\label{fig:full_reduction}
 \end{figure}
 
