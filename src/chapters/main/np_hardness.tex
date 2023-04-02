@@ -178,8 +178,21 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 	\begin{align*}
 		& M = \max \parens{
-			\underbrace{3nm + 2n + 1}_{\text{Space for \ilmath{l_{m,3}} and aux.}}, \qquad
-			\underbrace{3nm + 4n + 4}_{\text{Space for \ilmath{r_n} and \ilmath{c_m} within span of \ilmath{l_{i,1}}}}
+			\underbrace{3nm + 2n + 1}_{
+				\substack{
+					\text{Horizontal} \\
+					\text{space for \ilmath{l_{m,3}}} \\
+					\text{ and auxiliaries}
+				}
+			}, \quad
+			\underbrace{3nm + 4n + 4}_{
+				\substack{
+					\text{Vertical} \\
+					\text{space for \ilmath{r_n}} \\
+					\text{and \ilmath{c_m} } \\
+					\text{within span of \ilmath{l_{i,1}}}
+				}
+			}
 		} \\
 		\Rightarrow & M = 3nm + 4n + 4 \quad \text{is sufficient}
 	\end{align*}
