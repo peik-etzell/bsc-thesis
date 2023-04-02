@@ -1,7 +1,8 @@
 \section{Alternative metrics to makespan}\label{chapter:alternative_metrics}
 
 
-Let \ilmath{\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}} be the arrival time of \ilmath{r}, i.e. the timestep when \ilmath{r} stops moving. Define \ilmath{P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }} to be the \emph{path} of \ilmath{r}: the sequence of steps \ilmath{r} takes in a schedule. 
+Let \ilmath{\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}} be the arrival time of \ilmath{r}, i.e. the timestep when \ilmath{r} stops moving. 
+Define \ilmath{P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }} to be the \emph{path} of \ilmath{r}: the sequence of steps \ilmath{r} takes in a schedule. 
 
 Consider the following well-defined cost functions:
 \begin{align*}
@@ -18,7 +19,9 @@ Consider the following well-defined cost functions:
 \begin{align}\label{eq:metric_tuple}
 	\forall \parens{f_1,\ f_2} \in \set{\mono{M, TAT, TD, MD}}^2 : \exists I : \schedules_{\text{opt}_{f_1}} \cap \schedules_{\text{opt}_{f_2}} = \emptyset,
 \end{align}
-where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of optimal schedules for an instance \ilmath{I} with respect to some cost function \ilmath{f}. That \cref{eq:metric_tuple} is true on a general graph does not imply that it holds for our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model. However, by coming up with new grid-specific problem instances we prove the statement holds on the grid as well.
+where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of optimal schedules for an instance \ilmath{I} with respect to some cost function \ilmath{f}. 
+That \cref{eq:metric_tuple} is true on a general graph does not imply that it holds for our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model. 
+However, by coming up with new grid-specific problem instances we prove the statement holds on the grid as well.
 
 \begin{lemma}\label{lemma:simultaneous_1}
 	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} cannot always be simultaneously optimized on the grid.
@@ -35,7 +38,9 @@ where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of
 		\label{fig:sim1}
 	\end{figure}
 
-	Observe the configuration in \cref{fig:sim1}. It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total travel time and distance instead. See \cref{fig:sim1_strat} for a visual of this. 
+	Observe the configuration in \cref{fig:sim1}. 
+	It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total travel time and distance instead. 
+	See \cref{fig:sim1_strat} for a visual of this. 
 
 	% FIGURE SIMULTANEOUS 1 STRATEGIES
 	\begin{figure}[h]
@@ -47,7 +52,8 @@ where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of
 		\label{fig:sim1_strat}
 	\end{figure}
 
-It is quite trivial to conclude that there are no better solutions to this instance w.r.t. these metrics. This implies one cannot always optimize simultaneously for any pairing in \ilmath{\set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} on the grid.
+It is quite trivial to conclude that there are no better solutions to this instance w.r.t. these metrics. 
+This implies one cannot always optimize simultaneously for any pairing in \ilmath{\set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} on the grid.
 \end{proof}
 
 \begin{lemma}\label{lemma:simultaneous_2}
@@ -75,7 +81,10 @@ It is quite trivial to conclude that there are no better solutions to this insta
 		\label{fig:sim2_strat}
 	\end{figure}
 
-	Similarly to \cref{lemma:simultaneous_1}, observe the instance in \cref{fig:sim2}. There are again two different strategies, seen in \cref{fig:sim2_strat}: robot 1 either waits for robot 2 to pass, or alternatively goes a longer distance beneath robot 2. The instance is constructed so 2 and 3 have no choice but to move in these specific paths to avoid accumulating larger time and distance penalties, which means 1 has the only real choice here. As there are no better schedules than these for any of these metrics, it implies no schedule exists that optimizes the specific pairs in \cref{lemma:simultaneous_2} concurrently.
+	Similarly to \cref{lemma:simultaneous_1}, observe the instance in \cref{fig:sim2}. 
+	There are again two different strategies, seen in \cref{fig:sim2_strat}: robot 1 either waits for robot 2 to pass, or alternatively goes a longer distance beneath robot 2. 
+	The instance is constructed so 2 and 3 have no choice but to move in these specific paths to avoid accumulating larger time and distance penalties, which means 1 has the only real choice here. 
+	As there are no better schedules than these for any of these metrics, it implies no schedule exists that optimizes the specific pairs in \cref{lemma:simultaneous_2} concurrently.
 \end{proof}
 
 \begin{theorem}
@@ -92,6 +101,8 @@ It is quite trivial to conclude that there are no better solutions to this insta
 		\label{fig:sim_separate}
 	\end{figure}
 
-	Consider the graphs in \cref{fig:sim_separate} that show which cost functions are sometimes pairwise simultaneously unoptimizable. A new graph with the same vertices and a union of the edges clearly gives us a 4-clique, which is exactly what we are after. This implies the general proof from \cite{corr/YuL15c} also holds on the grid.
+	Consider the graphs in \cref{fig:sim_separate} that show which cost functions are sometimes pairwise simultaneously unoptimizable. 
+	A new graph with the same vertices and a union of the edges clearly gives us a 4-clique, which is exactly what we are after. 
+	This implies the general proof from \cite{corr/YuL15c} also holds on the grid.
 \end{proof}
 

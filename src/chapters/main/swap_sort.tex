@@ -3,7 +3,10 @@
 \fda{edit this section as discussed in the meeting}
 \subsection{Some preliminaries}
 
-Consider two nodes \ilmath{v,\ w \in V}. Let the \emph{infinity norm} be defined as \ilmath{L_\infty = \linfty{v - w} \coloneqq \max\parens{\abs{v_x - w_x},\ \abs{v_y - w_y}}}. Let \ilmath{d \coloneqq \max_{r \in R}\parens{\linfty{\iconf{s}{r} - \iconf{t}{r}}}}. Note that \ilmath{\linfty{v - w} \leq \manhattan{v - w} \leq 2\cdot \linfty{v - w}}.
+Consider two nodes \ilmath{v,\ w \in V}. 
+Let the \emph{infinity norm} be defined as \ilmath{L_\infty = \linfty{v - w} \coloneqq \max\parens{\abs{v_x - w_x},\ \abs{v_y - w_y}}}. 
+Let \ilmath{d \coloneqq \max_{r \in R}\parens{\linfty{\iconf{s}{r} - \iconf{t}{r}}}}. 
+Note that \ilmath{\linfty{v - w} \leq \manhattan{v - w} \leq 2\cdot \linfty{v - w}}.
 
 
 \begin{remark}
@@ -12,7 +15,9 @@ Consider two nodes \ilmath{v,\ w \in V}. Let the \emph{infinity norm} be defined
 
 \subsection{Transformations by disjoint swap routines}
 
-Given a \ilmath{2 \times 3} (or \ilmath{3 \times 2}) rectangle with up to six robots, \cite{siamcomp/DemaineFKMS19} shows that any two configurations \ilmath{\conf{1}} and \ilmath{\conf{2}} of this rectangle are within 7 transformation steps from each other. This results in a workspace being able to be subdivided into multiple of these rectangular blocks that can be independently permutable in constant time. See \cref{fig:swap3} for a visual of swapping two neighboring robots.
+Given a \ilmath{2 \times 3} (or \ilmath{3 \times 2}) rectangle with up to six robots, \cite{siamcomp/DemaineFKMS19} shows that any two configurations \ilmath{\conf{1}} and \ilmath{\conf{2}} of this rectangle are within 7 transformation steps from each other. 
+This results in a workspace being able to be subdivided into multiple of these rectangular blocks that can be independently permutable in constant time. 
+See \cref{fig:swap3} for a visual of swapping two neighboring robots.
 
 \begin{figure}[h]
 	\centering
@@ -22,15 +27,23 @@ Given a \ilmath{2 \times 3} (or \ilmath{3 \times 2}) rectangle with up to six ro
 	}\label{fig:swap3}
 \end{figure}
 
-\cite{algorithmica/MarbergG88} introduced an algorithm called \emph{Rotatesort} which can sort an \ilmath{n_1 \times n_2} mesh in parallel in \ilmath{O(n_1 + n_2)} time. The algorithm is not built with robots in mind, and uses operations breaking the non-swapping constraint in \cref{req:no_swaps} of our motion planning problem. However, we can clearly simulate atomic swap operations in \ilmath{O(1)} time like in \cref{fig:swap3}, and this can be done in parallel, as a workspace can be subdivided into disjoint rectangles. As \ilmath{O((n_1 + n_2) \cdot O(1)) = O(n_1 + n_2)}, this implies that for an \ilmath{n_1 \times n_2} workspace there is an efficient algorithm that can always compute a schedule with \ilmath{O(n_1 + n_2)} makespan. This clearly works even for workspaces with densities of up to 100\%, i.e. no free vertices available.  
+\cite{algorithmica/MarbergG88} introduced an algorithm called \emph{Rotatesort} which can sort an \ilmath{n_1 \times n_2} mesh in parallel in \ilmath{O(n_1 + n_2)} time. 
+The algorithm is not built with robots in mind, and uses operations breaking the non-swapping constraint in \cref{req:no_swaps} of our motion planning problem. 
+However, we can clearly simulate atomic swap operations in \ilmath{O(1)} time like in \cref{fig:swap3}, and this can be done in parallel, as a workspace can be subdivided into disjoint rectangles. 
+As \ilmath{O((n_1 + n_2) \cdot O(1)) = O(n_1 + n_2)}, this implies that for an \ilmath{n_1 \times n_2} workspace there is an efficient algorithm that can always compute a schedule with \ilmath{O(n_1 + n_2)} makespan. 
+This clearly works even for workspaces with densities of up to 100\%, i.e. no free vertices available.  
 
 % As longer distances would ideally be traversed monotonously moving in the same direction, and not back and forth, continuously transforming \ilmath{n_1 \times n_2} rectangles, \cite{siamcomp/DemaineFKMS19} comes up with the idea of combining Rotatesort with so-called \emph{subflows}. 
 
 \subsection{Utilizing subflows to gain constant stretch}
 
-Building upon the previous findings, \cite{siamcomp/DemaineFKMS19} further details an algorithm for achieving a \emph{constant stretch factor} for arbitrary start and target configurations. By subdividing the workspace into fairly large but \ilmath{O(d)} sized tiles, any transformations that is within such a tile can be done in linear time w.r.t. \fda{adjust the spacing here and everywhere else} the maximum horizontal or vertical distance, due to the previous findings with Rotatesort. They show that \ilmath{O(d)} non-intersecting \emph{subflows} can be used to swap robots between tiles efficiently, using \ilmath{O(d)} transformation steps.
+Building upon the previous findings, \cite{siamcomp/DemaineFKMS19} further details an algorithm for achieving a \emph{constant stretch factor} for arbitrary start and target configurations. 
+By subdividing the workspace into fairly large but \ilmath{O(d)} sized tiles, any transformations that is within such a tile can be done in linear time w.r.t. \fda{adjust the spacing here and everywhere else} the maximum horizontal or vertical distance, due to the previous findings with Rotatesort. 
+They show that \ilmath{O(d)} non-intersecting \emph{subflows} can be used to swap robots between tiles efficiently, using \ilmath{O(d)} transformation steps.
 
-Preprocessing the tiles to be compatible with non-intersecting subflows means swapping some robots between tiles. Otherwise, diagonally neighboring tiles would have robots going both ways, crossing paths. \cite{siamcomp/DemaineFKMS19} shows that this preprocessing is possible to do in \ilmath{O(d)} steps. 
+Preprocessing the tiles to be compatible with non-intersecting subflows means swapping some robots between tiles. 
+Otherwise, diagonally neighboring tiles would have robots going both ways, crossing paths. 
+\cite{siamcomp/DemaineFKMS19} shows that this preprocessing is possible to do in \ilmath{O(d)} steps. 
 
 As a result, on a very high level, the following algorithm allows for a constant stretch schedule for any arbitrary workspaces with up to 100\% densities: 
 \begin{enumerate}
@@ -39,5 +52,6 @@ As a result, on a very high level, the following algorithm allows for a constant
 	\item All robots are now in their target tiles. Transform all tiles to their target configurations in parallel in \ilmath{O(d)} steps
 \end{enumerate}
 
-The schedule for this can be computed in \ilmath{O(dn_1 n_2)} time \cite{siamcomp/DemaineFKMS19}, and it can clearly be executed in \ilmath{O(d)} time. \ilmath{O(d)} is equivalent to a constant stretch factor, which also implies a constant approximation factor. 
+The schedule for this can be computed in \ilmath{O(dn_1 n_2)} time \cite{siamcomp/DemaineFKMS19}, and it can clearly be executed in \ilmath{O(d)} time. 
+\ilmath{O(d)} is equivalent to a constant stretch factor, which also implies a constant approximation factor. 
 
