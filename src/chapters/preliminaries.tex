@@ -5,26 +5,22 @@
 % WORKSPACE 
 Let our grid-based workspace be modeled as a graph \ilmath{ G \coloneqq (V, E)}. 
 Let it be a rectangle \ilmath{n_1 \times n_2} where \ilmath{n_1, n_2 \geq 2 \text{ and } n_1, n_2 \in \mathbb{N}}. 
-\fda{No need to say ``label'' here. 
-It is directly the definition of \(V\).}
-Label the vertices as \ilmath{V = \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}}, and denote their \ilmath{x} and \ilmath{y} -coordinates by \ilmath{v_x} and \ilmath{v_y} respectively for any vertex \ilmath{v \in V}.
-\fda{I would rephrase the latter sentence more formally: 
-for any \(v \in V\), let \(v_x, v_y\) ne such that \(v = (v_x, v_y)\). 
-We will call \(v_x\) the \(x\)-coordinate of \(v\), and \(v_y\) it \(y\)-coordinate.}
-To measure distance, we use the \emph{Manhattan norm} \ilmath{L_1 = \manhattan{v - w} \coloneqq (\abs{v_x - w_x} + \abs{v_y - w_y})}. Using this, the edges can be defined as \ilmath{E = \set{(v, w) \mid \manhattan{v - w} = 1 \text{ for } v, w \in V}}. In other words, nodes are only connected to their up to four immediate neighbors in the plane \fda{grid?}.
+Define the vertices as \ilmath{V \coloneqq \set{1, 2, \dots , n_1} \times \set{1, 2, \dots , n_2}}.
+For any \(v \in V\), let \(v_x, v_y\) be such that \(v = (v_x, v_y)\). 
+We will call \(v_x\) the \(x\)-coordinate of \(v\), and \(v_y\) its \(y\)-coordinate.
+To measure distance, we use the \emph{Manhattan norm} \ilmath{L_1 = \manhattan{v - w} \coloneqq (\abs{v_x - w_x} + \abs{v_y - w_y})}. Using this, the edges can be defined as \ilmath{E = \set{(v, w) \mid \manhattan{v - w} = 1 \text{ for } v, w \in V}}. In other words, nodes are only connected to their up to four immediate neighbors in the grid.
 
 % ROBOTS AND CONFIGURATIONS
-Let there be \ilmath{N \leq (\nngrid)} \fda{why parantheses?} robots in our workspace. 
+Let there be \ilmath{N \leq \nngrid}  robots in our workspace. 
 We can identify them by a number \ilmath{r \in R := \set{1, 2, \dots , N} \subset \mathbb{N}}. 
-Let \ilmath{\bot} signify an empty vertex \fda{I would write ``let \(\bot\) be a symbol whose purpose is to identify empty vertices''}. 
+Let \(\bot\) represent the empty vertices.
 A \emph{configuration} is then a mapping \ilmath{\conf{} : V \mapsto \set{1, 2, \dots, N, \bot}} injective upon the robots in \ilmath{R}. 
 Injectivity implies no two vertices in \ilmath{V} can be occupied at once, so there will always be exactly \ilmath{(\nngrid - N)} empty squares in the grid.
 
 % CONFIGURATION INVERSE
-The \emph{inverse} of a configuration \ilmath{\iconf{}{r} = (x, y), \; r \in R} \fda{,} is the \emph{position} of a robot.
-\fda{for the latter sentence, I would say that the inverse of a configuration is another function (or mapping) that maps robot labels into positions - it is not a position!}
+The \emph{inverse} of a configuration \(\iconf{}{r} = (x, y), \; r \in R\), is another function mapping robots to their respective positions.
 The robots move synchronously and in parallel, up to a single edge at a time. 
-A valid (no-collision) configuration \ilmath{\conf{1}} can thus be \emph{transformed} into another valid configuration \ilmath{\conf{2}} in a \emph{single step} if and only if:
+A valid (no-collision) configuration \(\conf{1}\) can thus be \emph{transformed} into another valid configuration \(\conf{2}\) in a \emph{single step} if and only if:
 
 % TRANSFORMATION REQUIREMENTS
 \begin{align}
@@ -32,16 +28,16 @@ A valid (no-collision) configuration \ilmath{\conf{1}} can thus be \emph{transfo
 	\land & \parens{\nconf{1}{v} = \nconf{2}{w} \Rightarrow \nconf{2}{v} \neq \nconf{1}{w}, \; \forall v, w \in V}\label{req:no_swaps}
 \end{align}
 
-In other words, \cref{req:limited_movement} implies \fda{means?} a robot can stay in place or move to a neighboring square at every step, while \cref{req:no_swaps} forbids two robots from swapping places in a single transformation step (and they can never occupy the same vertex), equivalent to a collision in the real world.
+In other words, \cref{req:limited_movement} means a robot can stay in place or move to a neighboring square at every step, while \cref{req:no_swaps} forbids two robots from swapping places in a single transformation step (and they can never occupy the same vertex), equivalent to a collision in the real world.
 
 % SCHEDULE
-Denote a single transformation step as \fda{denote goes with ``by'', not ``as''} \ilmath{\conf{i} \rightarrow \conf{i + 1}}. 
+Denote a single transformation step by \(\conf{i} \rightarrow \conf{i + 1}\). 
 A \emph{schedule} is a sequence of transformation steps \ilmath{S \coloneqq \conf{1} \rightarrow \conf{2} \rightarrow \cdots \rightarrow \conf{k}}. 
 A configuration \ilmath{\conf{s}} can be transformed into a configuration \ilmath{\conf{t}} if there exists a schedule \ilmath{\conf{s} \rightarrow \conf{s + 1} \rightarrow \cdots \rightarrow \conf{t - 1} \rightarrow \conf{t}}.
 
 % PROBLEM DEFINITION
 \begin{definition}\label{def:motion_planning_problem}
-	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, the \emph{motion planning problem} ask \fda{asks} to find a \emph{schedule} \fda{you already put ``schedule'' in emph before: no need to do it anymore} that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
+	Given a start configuration \ilmath{\conf{s}} and a target configuration \ilmath{\conf{t}} of a workspace, the \emph{motion planning problem} asks to find a schedule that transforms \ilmath{\conf{s}} into \ilmath{\conf{t}}.
 \end{definition}
 
 Denote the tuple of a workspace and two configurations \ilmath{I \coloneqq \parens{G,\ \conf{s},\ \conf{t}}} as a problem \emph{instance}. 
@@ -65,7 +61,7 @@ Denote the tuple of a workspace and two configurations \ilmath{I \coloneqq \pare
 
 \begin{definition}\label{def:optimality}
 	Let \ilmath{\schedules} denote the set of all valid schedules for some problem instance \ilmath{I}. 
-	A schedule \ilmath{S_\text{opt}} is \emph{optimal} with respect to some cost function \ilmath{f : \schedules \mapsto \mathbb{N}} mapping all valid schedules to some integer value if and only if \ilmath{f(S) \geq f(\sopt)} for all such valid schedules \ilmath{S} \fda{\(\in \schedules\)}.
+	A schedule \ilmath{S_\text{opt}} is \emph{optimal} with respect to some cost function \ilmath{f : \schedules \mapsto \mathbb{N}} mapping all valid schedules to some integer value if and only if \ilmath{f(S) \geq f(\sopt)} for all such valid schedules \(S \in \schedules\).
 \end{definition}
 
 % M3PP -- MINIMUM MAKESPAN MOTION PLANNING PROBLEM
@@ -80,21 +76,19 @@ Denote the tuple of a workspace and two configurations \ilmath{I \coloneqq \pare
 
 \begin{definition}
 	Let the aforementioned lower bound to a schedule with makespan \ilmath{M} be denoted by \ilmath{L}. 
-	The \ilmath{\emph{stretch factor}} for that schedule is then defined as \ilmath{\frac{M}{L} \geq 1} \fda{ the inequality should be described later: defined as \(\frac ML\), which is always at least 1}.
+	The \ilmath{\emph{stretch factor}} for that schedule is then defined as \(\frac{M}{L}\), which is always at least 1. 
 \end{definition}
 
 \subsection{Some general notation}
 
 \begin{definition}
-	Let \ilmath{f(n)} be some function. \fda{don't start a sentence with a math formula} \ilmath{f(n)} has an asymptotic upper bound \ilmath{g(n)} if there are some constants \ilmath{c \text{ and } n_0} such that \ilmath{f(n) \leq c\cdot g(n),\ \forall n \geq n_0}. 
-	It is then denoted with slight abuse of notation \ilmath{f(n) = O(g(n))}. 
-	\fda{no need to say that it is an abuse of notation, this is pretty standard. 
-	It is called Bachmann–Landau notation} 
+	A function \(f(n)\) has an asymptotic upper bound \ilmath{g(n)} if there are some constants \ilmath{c \text{ and } n_0} such that \ilmath{f(n) \leq c\cdot g(n),\ \forall n \geq n_0}. 
+	It is then denoted as \(f(n) = O(g(n))\). 
 \end{definition}
 
-Let \emph{A} be some algorithm. 
-\fda{\(A\) is said to run in \emph{polynomial time} ... if the execution of \(A\) by a deterministic Turing machine is done in a polynomial number of steps w.r.t.\ the input bit length... (are yyou sure you want do define this? I think is better to assume it is known)}
-It is \emph{polynomial time} and often said to be \emph{efficient} if the runtime of \emph{A} is bounded by some polynomial function \ilmath{T(A) = O(n^c)} for some constant \ilmath{c}.
+% Let \emph{A} be some algorithm. 
+% \fda{\(A\) is said to run in \emph{polynomial time} ... if the execution of \(A\) by a deterministic Turing machine is done in a polynomial number of steps w.r.t.\ the input bit length... (are yyou sure you want do define this? I think is better to assume it is known)}
+% It is \emph{polynomial time} and often said to be \emph{efficient} if the runtime of \emph{A} is bounded by some polynomial function \ilmath{T(A) = O(n^c)} for some constant \ilmath{c}.
 
 Let OPT be the optimal (minimum) value of some function \ilmath{f}. 
 If some algorithm \ilmath{A} can always find a solution that maps to within a \ilmath{\rho}-factor of the optimal value: \ilmath{OPT \leq f(x_A) \leq \rho \cdot OPT}, the algorithm is called a \ilmath{\rho}-approximation algorithm. 

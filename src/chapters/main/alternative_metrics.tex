@@ -1,6 +1,5 @@
 \section{Alternative metrics to makespan}\label{chapter:alternative_metrics}
 
-
 Let \ilmath{\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}} be the arrival time of \ilmath{r}, i.e. the timestep when \ilmath{r} stops moving. 
 Define \ilmath{P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }} to be the \emph{path} of \ilmath{r}: the sequence of steps \ilmath{r} takes in a schedule. 
 
@@ -25,6 +24,7 @@ However, by coming up with new grid-specific problem instances we prove the stat
 
 \begin{lemma}\label{lemma:simultaneous_1}
 	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} cannot always be simultaneously optimized on the grid.
+\end{lemma}
 
 \begin{proof}
 
