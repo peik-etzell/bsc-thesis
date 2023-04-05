@@ -124,6 +124,7 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 	\cref{checks:target_acquired} can be done linearly with respect to the number of robots, as checking the positions for every robot is sufficient (configurations are assumed to be valid, and that \(\iconf{}{r}\) would raise an error if the mapped position would not be deterministically defined).
 	Trivially \cref{checks:makespan} can be done in \(\mathcal{O}(M)\). 
 	% \fda{be careful, because items 1 and 2 need also to be repeated for at most \(M\) times: it needs to be added in the final running time}
+	% ^^ should be accounted for already
 
 	A solution is thus verifiable in \(\mathcal{O}(M \cdot N)\), which implies the problem is in NP by definition.
 \end{proof}
@@ -268,8 +269,8 @@ The number of needed robots is also significantly smaller: \(3n + 4m\) robots co
 	
 	Assume instead there exists an algorithm \(A\) that solves the decision problem. 
 	It has runtime \(T(A)\). 
-	\cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \(O(n_1 + n_2)\). 
-	Thus, repeatedly applying \(A\) for makespans \(\set{1, 2, \dots, O(n_1 + n_2)}\) would solve the minimum makespan problem within \(O(T(A) \cdot (n_1 + n_2) )\) time. 
+	\cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \(\mathcal{O}(n_1 + n_2)\). 
+	Thus, repeatedly applying \(A\) for makespans \(\set{1, 2, \dots, \mathcal{O}(n_1 + n_2)}\) would solve the minimum makespan problem within \(\mathcal{O}(T(A) \cdot (n_1 + n_2) )\) time. 
 	This is exponential if \(T(A)\) is exponential, polynomial if \(T(A)\) is polynomial. 
 	Thus the minimum makespan problem is not harder than the decision problem. 
 

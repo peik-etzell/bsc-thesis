@@ -1,49 +1,69 @@
 \section{Introduction}
 \subsection{Background}
 
-Robotic motion planning is a field of research in theoretical computer science which has been deeply studied. It focuses on designing and studying algorithms for making robots get from one point to another safely (without colliding) and efficiently (minimizing some properly defined cost function) \cite{mit/chosetPrinciplesRobotMotion2005}.
+Robotic motion planning is a field of research in theoretical computer science which has been deeply studied.
+It focuses on designing and studying algorithms for making robots get from one point to another safely (without colliding) and efficiently (minimizing some properly defined cost function) \cite{mit/chosetPrinciplesRobotMotion2005}.
 
 Robots are modeled in a vast number of ways, which differ in terms of shapes, sizes and kinematics: some warehouse robots can be modeled to move in two dimensions only, while flying drones can be seen as moving in three dimensions.
 
-Robotic arms that move an end-effector are often modeled in six dimensions: three spatial ones and three for orientation. These robotic arms often have so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary \cite{robo/ChiaveriniOM16}. Kinematic redundancy increases the fault-tolerance and dexterity of the robot, and makes it possible to re-adjust while hold the same end-effector pose, but it also increases the complexity in motion planning as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}. Kinematic redundancy enables the arm to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}.
+Robotic arms that move an end-effector are often modeled in six dimensions: three spatial ones and three for orientation.
+These robotic arms often have so-called kinematic redundancy, meaning they have more degrees of freedom than strictly necessary \cite{robo/ChiaveriniOM16}.
+Kinematic redundancy increases the fault-tolerance and dexterity of the robot, and makes it possible to re-adjust while hold the same end-effector pose, but it also increases the complexity in motion planning as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}.
+Kinematic redundancy enables the arm to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}.
 
-There are many different environments in which robots exist. Assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them. Robotic vacuum cleaners on the other hand need to map their environment and make decisions dynamically, as furniture, people and pets can change places from time to time. Some robots need to work together; multi-robot systems can be found in warehouses \cite{robo/ParkerRS16}, where parallel motion is highly desirable, but past research has focused mostly on algorithms moving robots one-by-one \cite{siamcomp/DemaineFKMS19}.
+There are many different environments in which robots exist.
+Assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them.
+Robotic vacuum cleaners on the other hand need to map their environment and make decisions dynamically, as furniture, people and pets can change places from time to time.
+Some robots need to work together; multi-robot systems can be found in warehouses \cite{robo/ParkerRS16}, where parallel motion is highly desirable, but past research has focused mostly on algorithms moving robots one-by-one \cite{siamcomp/DemaineFKMS19}.
 
 \subsection{Parallel robots}
 
-The field of coordinated motion planning for parallel robotics has seen a lot of research in recent years, with algorithms tackling different problems in the field. 
+The field of coordinated motion planning for parallel robotics has seen a lot of research in recent years, with algorithms tackling different problems in the field.
 
-The many real world scenarios to be studied led to the formulation of different problems. The goal is to move the robots from their starting positions to their target positions without colliding with other robots. Without accounting for collisions, finding a solution would of course be trivial, as robots could move straight to their targets. There are two different general types of motion problems: finding a collision-free schedule transforming a workspace from a starting configuration to a target configuration is called a \emph{motion planning problem}, while determining if such a schedule exists is called the \emph{mover's problem} \cite{siamcomp/HopcroftW86}. 
+
+The many real world scenarios to be studied led to the formulation of different problems.
+The goal is to move the robots from their starting positions to their target positions without colliding with other robots.
+Without accounting for collisions, finding a solution would of course be trivial, as robots could move straight to their targets.
+There are two different general types of motion problems: finding a collision-free schedule transforming a workspace from a starting configuration to a target configuration is called a \emph{motion planning problem}, while determining if such a schedule exists is called the \emph{mover's problem} \cite{siamcomp/HopcroftW86}.
+
+Some variations to this motion problem exist: in its \emph{labeled} formulation, robots are unique, and are assigned specific target locations to move to.
+This problem formulation is the most studied \cite{fun/BrockenHKLS21}.
+In its \emph{unlabeled} formulation, robots are instead indistinguishable from each other, and targets can be occupied by any robot.
+In 2014, \cite{ijrr/SoloveyH14} introduced a generalization of labeled and unlabeled problems: in a \emph{(k-)colored} problem, the robots are partitioned into $k$ colors or groups, and each have to move to a target location with the same coloring.
+\emph{Labeled} and \emph{unlabeled} are then extremes of the \emph{colored} problem formulation: $k=1$ gives an unlabeled problem, as all robots are of the same color, while $k=n$ gives all robots their own unique color.
 
 After executing a valid schedule, all robots will have moved from their starting positions to their target positions, and all target positions are occupied by a robot.
+There is naturally a desire to execute the schedule \emph{efficiently} by some metric.
+We will mainly focus on the \emph{makespan} in this thesis: the total time taken for all robots to get to their target positions.
+Other common metrics are \emph{total arrival time}, \emph{total distance} and \emph{maximum distance}; more on these in \cref{chapter:alternative_metrics}. 
 
-Some variations to this motion problem exist: in its \emph{labeled} formulation, robots are unique, and are assigned specific target locations to move to. This problem formulation is the most studied \cite{fun/BrockenHKLS21}. In its \emph{unlabeled} formulation, robots are instead indistinguishable from each other, and targets can be occupied by any robot. In 2014, \cite{ijrr/SoloveyH14} introduced a generalization of labeled and unlabeled problems: in a \emph{(k-)colored} problem, the robots are partitioned into $k$ colors or groups, and each have to move to a target location with the same coloring. \emph{Labeled} and \emph{unlabeled} are then extremes of the \emph{colored} problem formulation: $k=1$ gives an unlabeled problem, as all robots are of the same color, while $k=n$ gives all robots their own unique color. 
+Real robots are physically three-dimensional objects, but they are mostly restricted to two dimensions in multi-robot applications.
+There are some works exploring higher dimensions: \cite{arobots/TurpinMMK14}, but current works are quite focused on the two-dimensional setting.
+Reasons for this might be ease of visualization and thus understanding, simpler algorithms, real world applicability or something else.
 
-% The problem has multiple variations: \refactor{we}{something else}
-% in the unlabeled formulation of the problem, we do not care which robot gets to which target position, only that all target positions get occupied. 
-% \TODO in the labeled formulation, robots and target positions have labels...
-% In case we want to move specific robots to specific targets, we have a labeled problem, where robots and target positions each have labels, such that target positions contain a robot with the same label at the end. 
-% Note that such labels can be unique or not, and some works distinguish between these cases: for example, \cite{demaineCoordinatedMotionPlanning2019} considers \emph{unlabeled, colored} and \emph{labeled} as variations on the problem, where \emph{labeled} means unique labels, and \emph{colored} is a generalization of the unlabeled and labeled variants: multiple robots (and targets) can have the same color, and the targets are only to be matched up with robots of the same color. \TODO explicit extreme
-% Thus both the unlabeled and labeled formulations can be modeled as specific cases of the colored one.
+The problem can also be modeled both in the continuous or discrete space.
+In a discrete model, the workspace is modeled as a grid, which can then be handled using graph theory, with grid cells being nodes that the robots occupy and move through.
 
-Real robots are physically three-dimensional objects, but they are mostly restricted to two dimensions in multi-robot applications. There are some works exploring higher dimensions: \cite{arobots/TurpinMMK14}, but current works are quite focused on the two-dimensional setting. Reasons for this might be ease of visualization and thus understanding, simpler algorithms, real world applicability or something else.
+In a continuous model, the robots can in theory be modeled as close to reality as wanted, but the increased complexity seems to not be worth it.
+Most current research in motion planning consider only simple shapes, and real warehouse robots also seem to reflect this in their shapes: many are shaped close to circles or squares.
+Unit radius disks (see \cite{siamcomp/DemaineFKMS19}, \cite{compgeom/BanyassadyBBBFH22}) or unit squares (see \cite{jea/YangV22}) make collision checking a lot simpler: a single distance metric on two robots' centers determines if they are in collision or not.
+Most continuous space research also study uniform sizes and shapes of robots, but for example \cite{fun/BrockenHKLS21} investigates motion planning of non-uniformly-sized discs.
 
-The problem can also be modeled both in the continuous or discrete space. In a discrete model, the workspace is modeled as a grid, which can then be handled using graph theory, with grid cells being nodes that the robots occupy and move through.
-
-In a continuous model, the robots can in theory be modeled as close to reality as wanted, but the increased complexity seems to not be worth it. Most current research in motion planning consider only simple shapes, and real warehouse robots also seem to reflect this in their shapes: many are shaped close to circles or squares. Unit radius disks (see \cite{siamcomp/DemaineFKMS19}, \cite{compgeom/BanyassadyBBBFH22}) or unit squares (see \cite{jea/YangV22}) make collision checking a lot simpler: a single distance metric on two robots' centers determines if they are in collision or not. Most continuous space research also study uniform sizes and shapes of robots, but for example \cite{fun/BrockenHKLS21} investigates motion planning of non-uniformly-sized discs.
-
-% Finding the minimum makespan solution to a discrete grid case of the coordinated motion planning problem is found to be NP-hard by \cite{siamcomp/DemaineFKMS19}. \cite{siamcomp/DemaineFKMS19} also conjectures that the continuous formulation of the problem would be at least as hard, but leaves it for future work.
-% NP-hardness implies approximation algorithms are justified \cite{siamcomp/DemaineFKMS19}, so research is focused on better approximations and faster computation. 
-
-There is also a distinction between centralized and distributed computing in motion planning. Robots are inherently physically distributed, and a lot of research considers multi-robot systems as a problem of distributed computing. Most research in specifically robotic motion planning uses centralized planning though, where a single entity computes all moves for all robots. Distributed computing considers similar but distinct problems, like \emph{rendezvous} and \emph{exploration}, which are covered in \cite{lncs/FlocchiniGN19}.
-
-
+There is also a distinction between centralized and distributed computing in motion planning.
+Robots are inherently physically distributed, and a lot of research considers multi-robot systems as a problem of distributed computing.
+Most research in specifically robotic motion planning uses centralized planning though, where a single entity computes all moves for all robots.
+Distributed computing considers similar but distinct problems, like \emph{rendezvous} and \emph{exploration}, which are covered in \cite{lncs/FlocchiniGN19}.
 
 
 
 
 \subsection{Thesis contributions}
 
-This thesis focuses specifically on centralized motion planning for parallel robotics on the planar grid. The goal of this thesis is to understand and explain the current research in the field, what has been done and what is yet to be understood. 
+This thesis focuses specifically on centralized motion planning for parallel robotics on the planar grid.
+The goal of this thesis is to understand and explain the current research in the field, what has been done and what is yet to be understood.
 
-In \cref{chapter:main_proof} we prove the computational complexity of low-makespan parallel motion planning by a simplified reduction from one originally constructed in \cite{siamcomp/DemaineFKMS19}. This proof shows that studying approximation algorithms are justified in the field. In \cref{chapter:constant_stretch} we take a look at two recent approximation algorithms from \cite{siamcomp/DemaineFKMS19}, which can efficiently compute low-makespan schedules for any problem on a grid. Lastly, in \cref{chapter:alternative_metrics} we consider four different metrics of optimality, including the makespan, and show that in general, one cannot have a schedule optimizing more than one of them simultaneously. This was previously proven to be true on a general graph by \cite{corr/YuL15c}, we extend this proof to hold specifically on the grid.
+In \cref{chapter:main_proof} we prove the computational complexity of low-makespan parallel motion planning by a simplified reduction from one originally constructed in \cite{siamcomp/DemaineFKMS19}.
+This proof shows that the study of approximation algorithms is justified in the field.
+In \cref{chapter:constant_stretch} we take a look at two recent approximation algorithms from \cite{siamcomp/DemaineFKMS19}, which can efficiently compute low-makespan schedules for any problem on a grid.
+Lastly, in \cref{chapter:alternative_metrics} we consider four different metrics of optimality, including the makespan, and show that in general, one cannot have a schedule optimizing more than one of them simultaneously.
+This was previously proven to be true on a general graph by \cite{corr/YuL15c}, we extend this proof to hold specifically on the grid.

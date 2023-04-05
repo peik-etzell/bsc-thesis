@@ -3,7 +3,7 @@
 Let \(\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}\) be the arrival time of \(r\), i.e. the timestep when \(r\) stops moving. 
 Define \(P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }\) to be the \emph{path} of \(r\): the sequence of steps \(r\) takes in a schedule. 
 
-Consider the following well-defined cost functions:
+Then consider the following well-defined cost functions:
 \begin{align*}
 	% \smash and manual spacing to circumvent the larger block from \max_{r \in R}
 	& \mono{Makespan} 				& \mono{(M)} && \schedules \mapsto \quad & \smash{\max_{r \in R}} \ \alpha_r 	\\[2mm] 
@@ -27,7 +27,6 @@ However, by coming up with new grid-specific problem instances we prove the stat
 \end{lemma}
 
 \begin{proof}
-
 	% FIGURE SIMULTANEOUS 1 PROBLEM
 	\begin{figure}[h]
 		\centering

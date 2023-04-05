@@ -7,20 +7,29 @@
 %%
 \documentclass[main=english, 12pt, a4paper, sci, utf8, a-1b, online]{aaltothesis}
 
-\usepackage{graphicx}
-%% Math fonts, symbols, and formatting
-\usepackage{amsfonts,amssymb,amsbsy,amsmath,amsthm,enumitem,mathtools,braket,tikz,csquotes}
+\usepackage{
+	amsfonts,
+	amssymb,
+	amsbsy,
+	amsmath,
+	amsthm,
+	enumitem,
+	mathtools,
+	braket,
+	tikz,
+	csquotes,
+	xcolor,
+	graphicx,
+	hyphenat,
+}
+
 \usepackage[capitalize]{cleveref}
 \usepackage[parfill]{parskip}
-\usepackage{hyphenat}
-% \usepackage[style=ieee]{biblatex}
-% \addbibresource{zotero.bib}
+\usepackage{}
 
 \hyphenpenalty=10000
 \tolerance=1000
 
-%% added by advisor
-\usepackage{xcolor}
 \input{include/environments.tex}
 \input{include/commands.tex}
 
@@ -35,7 +44,8 @@
 
 \thesisauthor{Peik Etzell}
 
-\thesistitle{Coordinated multi-robot motion planning: An overview}
+% \thesistitle{Coordinated multi-robot motion planning on a grid: An overview}
+\thesistitle{Motion planning for parallel robots on a grid: An overview}
 
 \place{Espoo}
 
@@ -49,7 +59,7 @@
 
 %% THE ENGLISH ABSTRACT:
 %% Thesis keywords:
-\keywords{}
+\keywords{makespan, distance, optimization, discrete, }
 
 %% The abstract text. This text is included in the metadata of the pdf file as well
 %% as the abstract page.
@@ -121,7 +131,6 @@ TODO
 \newpage
 
 
-\thispagestyle{empty}
 %% TABLE OF CONTENTS
 \thesistableofcontents
 
