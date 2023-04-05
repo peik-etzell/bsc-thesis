@@ -87,6 +87,7 @@ TODO
 %% ENGLISH ABSTRACT
 %% All the details (name, title, etc.) on the abstract page appear as specified
 %% above.
+\pagenumbering{gobble}
 \begin{abstractpage}[english]
     \abstracttext{}
 \end{abstractpage}
@@ -101,6 +102,7 @@ TODO
 \degreeprogram{Datateknik}
 \major{Datateknik}
 \keywords{}
+\thispagestyle{empty}
 \begin{abstractpage}[swedish]
 TODO
 \end{abstractpage}
@@ -119,11 +121,13 @@ TODO
 \newpage
 
 
+\thispagestyle{empty}
 %% TABLE OF CONTENTS
 \thesistableofcontents
 
 \clearpage
 
+\pagenumbering{arabic}
 % INTRODUCTION
 \input{chapters/introduction.tex}
 
@@ -140,9 +144,10 @@ TODO
 \input{chapters/conclusions.tex}
 
 \newpage
+\thispagestyle{empty}
 
 %% REFERENCES
-\bibliographystyle{ieeetr}
+\bibliographystyle{plain}
 \bibliography{manual_refs}
 
 \clearpage

@@ -1,7 +1,7 @@
 \section{Alternative metrics to makespan}\label{chapter:alternative_metrics}
 
-Let \ilmath{\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}} be the arrival time of \ilmath{r}, i.e. the timestep when \ilmath{r} stops moving. 
-Define \ilmath{P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }} to be the \emph{path} of \ilmath{r}: the sequence of steps \ilmath{r} takes in a schedule. 
+Let \(\alpha_r \coloneqq \max\set{\tau' \mid \iconf{\tau}{r} = \iconf{t}{r}\ \forall \tau \geq \tau'}\) be the arrival time of \(r\), i.e. the timestep when \(r\) stops moving. 
+Define \(P_r \coloneqq \set{ \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \mid \parens{ \iconf{i}{r},\ \iconf{i + 1}{r} } \in E }\) to be the \emph{path} of \(r\): the sequence of steps \(r\) takes in a schedule. 
 
 Consider the following well-defined cost functions:
 \begin{align*}
@@ -18,12 +18,12 @@ Consider the following well-defined cost functions:
 \begin{align}\label{eq:metric_tuple}
 	\forall \parens{f_1,\ f_2} \in \set{\mono{M, TAT, TD, MD}}^2 : \exists I : \schedules_{\text{opt}_{f_1}} \cap \schedules_{\text{opt}_{f_2}} = \emptyset,
 \end{align}
-where \ilmath{\schedules_{\text{opt}_f} \subseteq \schedules} denotes the set of optimal schedules for an instance \ilmath{I} with respect to some cost function \ilmath{f}. 
+where \(\schedules_{\text{opt}_f} \subseteq \schedules\) denotes the set of optimal schedules for an instance \(I\) with respect to some cost function \(f\). 
 That \cref{eq:metric_tuple} is true on a general graph does not imply that it holds for our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model. 
 However, by coming up with new grid-specific problem instances we prove the statement holds on the grid as well.
 
 \begin{lemma}\label{lemma:simultaneous_1}
-	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} cannot always be simultaneously optimized on the grid.
+	A pairing of cost functions \(\parens{f_1, f_2} \in \set{\mono{M, MD}} \times \set{\mono{TAT, TD}}\) cannot always be simultaneously optimized on the grid.
 \end{lemma}
 
 \begin{proof}
@@ -53,11 +53,11 @@ However, by coming up with new grid-specific problem instances we prove the stat
 	\end{figure}
 
 It is quite trivial to conclude that there are no better solutions to this instance w.r.t. these metrics. 
-This implies one cannot always optimize simultaneously for any pairing in \ilmath{\set{\mono{M, MD}} \times \set{\mono{TAT, TD}}} on the grid.
+This implies one cannot always optimize simultaneously for any pairing in \(\set{\mono{M, MD}} \times \set{\mono{TAT, TD}}\) on the grid.
 \end{proof}
 
 \begin{lemma}\label{lemma:simultaneous_2}
-	A pairing of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, TAT}} \times \set{\mono{MD, TD}}} cannot always be simultaneously optimized for on the grid. 
+	A pairing of cost functions \(\parens{f_1, f_2} \in \set{\mono{M, TAT}} \times \set{\mono{MD, TD}}\) cannot always be simultaneously optimized for on the grid. 
 \end{lemma}
 
 \begin{proof}
@@ -88,7 +88,7 @@ This implies one cannot always optimize simultaneously for any pairing in \ilmat
 \end{proof}
 
 \begin{theorem}
-	A pair of cost functions \ilmath{\parens{f_1, f_2} \in \set{\mono{M, TAT, TD, MD}}^2 } cannot always be simultaneously optimized for on the grid. 
+	A pair of cost functions \(\parens{f_1, f_2} \in \set{\mono{M, TAT, TD, MD}}^2 \) cannot always be simultaneously optimized for on the grid. 
 \end{theorem}
 
 \begin{proof}
