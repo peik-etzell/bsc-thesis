@@ -35,7 +35,7 @@ In 2014, \cite{ijrr/SoloveyH14} introduced a generalization of labeled and unlab
 After executing a valid schedule, all robots will have moved from their starting positions to their target positions, and all target positions are occupied by a robot.
 There is naturally a desire to execute the schedule \emph{efficiently} by some metric.
 We will mainly focus on the \emph{makespan} in this thesis: the total time taken for all robots to get to their target positions.
-Other common metrics are \emph{total arrival time}, \emph{total distance} and \emph{maximum distance}; more on these in \cref{chapter:alternative_metrics}. 
+Other common metrics are \emph{total arrival time}, \emph{total distance} and \emph{maximum distance}; more on these in \cref{chapter:simultaneous_optimization}. 
 
 Real robots are physically three-dimensional objects, but they are mostly restricted to two dimensions in multi-robot applications.
 There are some works exploring higher dimensions: \cite{arobots/TurpinMMK14}, but current works are quite focused on the two-dimensional setting.
@@ -65,5 +65,5 @@ The goal of this thesis is to understand and explain the current research in the
 In \cref{chapter:main_proof} we prove the computational complexity of low-makespan parallel motion planning by a simplified reduction from one originally constructed in \cite{siamcomp/DemaineFKMS19}.
 This proof shows that the study of approximation algorithms is justified in the field.
 In \cref{chapter:constant_stretch} we take a look at two recent approximation algorithms from \cite{siamcomp/DemaineFKMS19}, which can efficiently compute low-makespan schedules for any problem on a grid.
-Lastly, in \cref{chapter:alternative_metrics} we consider four different metrics of optimality, including the makespan, and show that in general, one cannot have a schedule optimizing more than one of them simultaneously.
+Lastly, in \cref{chapter:simultaneous_optimization} we consider four different metrics of optimality, including the makespan, and show that in general, one cannot have a schedule optimizing more than one of them simultaneously.
 This was previously proven to be true on a general graph by \cite{corr/YuL15c}, we extend this proof to hold specifically on the grid.

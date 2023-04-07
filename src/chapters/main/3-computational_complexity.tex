@@ -10,7 +10,7 @@ See \cite{aw/HopcroftU79} for a formal definition.
 A \emph{decision problem} is a computational problem asking a yes/no question based on some input.
 
 There are different \emph{classes} of decision problems in terms of computational complexity. 
-The \emph{P}-class of problems is defined as the set of decision problems solvable by a TM in \emph{polynomial time}, i.e.\ in \(O(n^k)\) time on the size of the input \emph{n} and some constant \emph{k}.
+The \emph{P}-class of problems is defined as the set of decision problems solvable by a TM in \emph{polynomial time}, i.e.~in \(O(n^k)\) time on the size of the input \emph{n} and some constant \emph{k}.
 
 The \emph{NP}-class of problems is defined as the set of decision problems that are \emph{verifiable} by a TM in polynomial time. 
 Actually finding a solution to an NP-problem might take considerably longer. 
@@ -40,7 +40,7 @@ If the reduction can be done in polynomial time, we write \(B \leq_p A\).
 \begin{definition}\label{def:np_hard}
 	A problem \emph{H} is classified as \emph{NP-hard} if there exists a polynomial time reduction \(A \leq_p H, \; \forall A \in \NP\). 
 	Note that \(H\) begin NP-hard does \emph{not} imply \(H \in \NP\). 
-	Though if \(H\) can be proven to belong to NP, i.e. be verifiable in polynomial time, \(H\) will then by definition be NP-complete.
+	Though if \(H\) can be proven to belong to NP, i.e.~be verifiable in polynomial time, \(H\) will then by definition be NP-complete.
 \end{definition}
 
 \begin{remark}\label{rem:p_np_hard_disjoint}
@@ -50,7 +50,7 @@ If the reduction can be done in polynomial time, we write \(B \leq_p A\).
 \begin{remark}\label{note:npc_proving}
 	Let \(A\) be some known NP-complete problem. 
 	If there is a polynomial time reduction from \(A\) to some other problem \(B\): \(A \leq_p B\), we know that \(B\) is NP-hard. 
-	Further proving that \(B\) is NP-complete would require \emph{either} a polynomial reduction from \(B\) to \(A\): \(B \leq_p A\) \emph{or}, possibly easier, proving that \(B\) is in NP, i.e. proving that \(B\) is deterministically verifiable in polynomial time.
+	Further proving that \(B\) is NP-complete would require \emph{either} a polynomial reduction from \(B\) to \(A\): \(B \leq_p A\) \emph{or}, possibly easier, proving that \(B\) is in NP, i.e.~proving that \(B\) is deterministically verifiable in polynomial time.
 \end{remark}
 
 Let a \emph{boolean expression} be composed of boolean variables \(b \in \set{\true,\, \false}\), negations (\texttt{not } \(\neg\)), conjunctions (\texttt{and} \(\land\)), disjunctions (\texttt{or} \(\lor\)) and parentheses.
@@ -135,7 +135,7 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 \begin{proof}
 	The following proof, heavily based on the proof by \cite{siamcomp/DemaineFKMS19} is done by a polynomial reduction from \emph{Monotone 3SAT} to a decision formulation of a coordinated multi-robot motion planning problem. 
-	As Monotone 3SAT is known to be NP-complete, a polynomial reduction implies the reduced problem is NP-hard. 
+	As Monotone 3SAT is known to be NP-complete, a polynomial reduction implies the reduced problem is NP-hard.
 	Together with \cref{lemma:np}, this implies the problem is also NP-complete. 
 
 
@@ -145,8 +145,8 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 % REDUCTION
 	\subsubsection*{The reduction} 
-	Let \(\varphi\) be some boolean expression corresponding to some Monotone 3SAT problem. 
-	The idea is to construct a workspace with robots having start and target configurations \(\conf{s}\) and \(\conf{t}\) respectively such that a critical makespan \emph{M} is achievable if and only if the original expression \(\varphi\) is satisfiable, otherwise requiring \(M + 1\) transformation steps at a minimum to transform \(\conf{s} \rightarrow \conf{t}\). 
+	Let \(\varphi\) be some boolean expression corresponding to some Monotone 3SAT problem.
+	The idea is to construct a workspace with robots having start and target configurations \(\conf{s}\) and \(\conf{t}\) respectively such that a critical makespan \emph{M} is achievable if and only if the original expression \(\varphi\) is satisfiable, otherwise requiring \(M + 1\) transformation steps at a minimum to transform \(\conf{s} \rightarrow \conf{t}\).
 	Follow along the construction by observing \cref{fig:full_reduction}: a one-to-one sketch of the simplest possible example. 
 
 
@@ -161,7 +161,7 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 		A minimal Monotone 3CNF formula \(\varphi = \parens{b_1 \lor b_2 \lor b_3}\) reduced to a robot motion planning problem. 
 		The dark red graphics show how the robots would be offset if the clause \(c_i\) was all-negative instead of the current all-positive. 
 		Disks represent robots while crosses represent their target positions. 
-		The circles highlight the variable-literal couplings and literal-clause couplings: a mismatched assignment of \(b_{j_k}\) w.r.t. \(l_{i,k}\) cascades into \(l_{i,k}\) blocking the path of \(c_i\).
+		The circles highlight the variable-literal couplings and literal-clause couplings: a mismatched assignment of \(b_{j_k}\) w.r.t. \(l_{i,k}\) cascades into \(l_{i,k}\) blocking one of the three paths of \(c_i\).
 	}\label{fig:full_reduction}
 \end{figure}
 
@@ -211,11 +211,11 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 
 
 	Denote the target position of \(l_{i,1}\) as \(t_{i,1} \parens{= \alpha \cdot i + \beta \cdot j_1 + \gamma + \phi \cdot f_i}\) for a moment. 
-	Set the start and target positions of the clause robot \(c_i\) to \(t_{i,1} + \coord{M - 5}{-1}\) and \(t_{i,1} - \coord{3}{3}\) respectively. 
+	Set the start and target positions of the clause robot \(c_i\) to \(t_{i,1} + \coord{M - 5}{-1}^T\) and \(t_{i,1} - \coord{3}{3}^T\) respectively. 
 	Note that the clause robot has to move \(M - 2\) steps to the left and \(2\) steps down and cannot wait, so it requires a clear path towards its target to make it within makespan \(M\).
 	
 	Note the importance of the two diagonals for robot-robot timings here: they are reminiscent of the eigenvectors of a matrix. 
-	Repositioning the literal robot along the downwards \diagdegs diagonal, the timing with respect to the variable robots, which move to the right, does not change, only the horizontal intersection of their paths, i.e. the two robots will still collide just the same. 
+	Repositioning the literal robot along the downwards \diagdegs diagonal, the timing with respect to the variable robots, which move to the right, does not change, only the horizontal intersection of their paths, i.e.~the two robots will still collide just the same. 
 	Similarly, repositioning the literal robot along the upwards diagonal does not change its timing with respect to a clause robot, which start at the top and move left. 
 
 	Now, onto explaining the specificity of the literal robot positioning. 
@@ -260,7 +260,7 @@ Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS
 The number of needed robots is also significantly smaller: \(3n + 4m\) robots compared to \(3n + 3m + 6n(m + 2)\) robots in the original. 
 
 \begin{corollary}
-	The problem of computing a \emph{minimum} makespan schedule for a given problem instance is as hard as the corresponding decision problem. 
+	The problem of computing a \emph{minimum} makespan schedule for a given problem instance has the same asymptotic runtime as the corresponding decision problem. \note{how did we formulate this?}
 \end{corollary}
 
 \begin{proof}
@@ -270,11 +270,11 @@ The number of needed robots is also significantly smaller: \(3n + 4m\) robots co
 	Assume instead there exists an algorithm \(A\) that solves the decision problem. 
 	It has runtime \(T(A)\). 
 	\cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \(\mathcal{O}(n_1 + n_2)\). 
-	Thus, repeatedly applying \(A\) for makespans \(\set{1, 2, \dots, \mathcal{O}(n_1 + n_2)}\) would solve the minimum makespan problem within \(\mathcal{O}(T(A) \cdot (n_1 + n_2) )\) time. 
+	Thus, repeatedly applying \(A\) for makespans \(\set{1,\ 2,\ \dots,\ \mathcal{O}(n_1 + n_2)}\) would solve the minimum makespan problem within \(\mathcal{O}(T(A) \cdot (n_1 + n_2) )\) time. 
 	This is exponential if \(T(A)\) is exponential, polynomial if \(T(A)\) is polynomial. 
 	Thus the minimum makespan problem is not harder than the decision problem. 
 
-	This proves the minimum makespan problem has to be as hard as the corresponding decision problem.
+	This proves the minimum makespan problem has the same asymptotic runtime as the decision problem, assuming 
 \end{proof} 
 
 Classifying the complexity of parallel robot motion planning as NP-complete is important, as it shows that it is unfeasible to compute an optimal schedule for sufficiently large problem instances. 
