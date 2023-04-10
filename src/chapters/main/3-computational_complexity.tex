@@ -16,13 +16,13 @@ The \emph{NP}-class of problems is defined as the set of decision problems that 
 Actually finding a solution to an NP-problem might take considerably longer. 
 It remains an important open question whether P is or is not equal to NP, but many believe P is a proper subset of NP.
 
-A transformation of a problem \(B\) into another problem \(A\) such that a solution to \(A\) solves \(B\) is called a \emph{reduction} and is commonly denoted \(B \leq A\). 
-If the reduction can be done in polynomial time, we write \(B \leq_p A\).
+A transformation of a problem \(Y\) into another problem \(X\) such that a solution to \(X\) solves \(Y\) is called a \emph{reduction} and is commonly denoted \(Y \leq X\). 
+If the reduction can be done in polynomial time, we write \(Y \leq_p X\).
 
 \begin{definition}\label{def:np_complete}
-	A decision problem \emph{A} is \emph{NP-complete} (\(A \in \text{NPC}\)) if and only if \emph{A} is in NP and there exists a polynomial time reduction from every problem in NP to \emph{A}:
+	A decision problem \emph{X} is \emph{NP-complete} (\(X \in \text{NPC}\)) if and only if \emph{X} is in NP and there exists a polynomial time reduction from every problem in NP to \emph{X}:
 	\begin{align*}
-		A \in \text{NPC} \Leftrightarrow \parens{A \in \NP} \land \parens{B \leq_p A, \; \forall B \in \NP}
+		X \in \text{NPC} \Leftrightarrow \parens{X \in \NP} \land \parens{Y \leq_p X, \; \forall Y \in \NP}
 	\end{align*}
 	NP-complete is essentially the hardest class of problems that can be verified in polynomial time. 
 \end{definition}
@@ -31,14 +31,14 @@ If the reduction can be done in polynomial time, we write \(B \leq_p A\).
 	If \(\pclass \neq \NP\) holds, the classes of P and NP-complete problems are disjoint. Otherwise \emph{all} problems in NP would be polynomially reducible to problems solvable in polynomial time, thus also solvable themselves in polynomial time. This would imply P = NP:
 	\begin{align*}
 		& \pclass \cap \text{NPC} \neq \emptyset \\
-		\Rightarrow \; & \exists A \in \pclass : B \leq_p A, \; \forall B \in \NP \\
-		\Rightarrow \; & B \in \pclass, \; \forall B \in \NP \\
+		\Rightarrow \; & \exists X \in \pclass : Y \leq_p X, \; \forall Y \in \NP \\
+		\Rightarrow \; & Y \in \pclass, \; \forall Y \in \NP \\
 		\Rightarrow \; & \pclass = \NP
 	\end{align*}
 \end{remark}
 
 \begin{definition}\label{def:np_hard}
-	A problem \emph{H} is classified as \emph{NP-hard} if there exists a polynomial time reduction \(A \leq_p H, \; \forall A \in \NP\). 
+	A problem \emph{H} is classified as \emph{NP-hard} if there exists a polynomial time reduction \(X \leq_p H, \; \forall X \in \NP\). 
 	Note that \(H\) begin NP-hard does \emph{not} imply \(H \in \NP\). 
 	Though if \(H\) can be proven to belong to NP, i.e.~be verifiable in polynomial time, \(H\) will then by definition be NP-complete.
 \end{definition}
@@ -48,9 +48,9 @@ If the reduction can be done in polynomial time, we write \(B \leq_p A\).
 \end{remark}
 
 \begin{remark}\label{note:npc_proving}
-	Let \(A\) be some known NP-complete problem. 
-	If there is a polynomial time reduction from \(A\) to some other problem \(B\): \(A \leq_p B\), we know that \(B\) is NP-hard. 
-	Further proving that \(B\) is NP-complete would require \emph{either} a polynomial reduction from \(B\) to \(A\): \(B \leq_p A\) \emph{or}, possibly easier, proving that \(B\) is in NP, i.e.~proving that \(B\) is deterministically verifiable in polynomial time.
+	Let \(X\) be some known NP-complete problem. 
+	If there is a polynomial time reduction from \(X\) to some other problem \(Y\): \(X \leq_p Y\), we know that \(Y\) is NP-hard. 
+	Further proving that \(Y\) is NP-complete would require \emph{either} a polynomial reduction from \(Y\) to \(X\): \(Y \leq_p X\) \emph{or}, possibly easier, proving that \(Y\) is in NP, i.e.~proving that \(Y\) is deterministically verifiable in polynomial time.
 \end{remark}
 
 Let a \emph{boolean expression} be composed of boolean variables \(b \in \set{\true,\, \false}\), negations (\texttt{not } \(\neg\)), conjunctions (\texttt{and} \(\land\)), disjunctions (\texttt{or} \(\lor\)) and parentheses.

@@ -30,7 +30,7 @@ At any timestep, Rotatesort requires that we can execute any disjoint swap opera
 These operations obviously break the non-swapping constraint in \cref{req:no_swaps} of our robot motion planning problem, however, as seen in \cref{fig:swap3}, we can clearly simulate an atomic swap operation in \(\mathcal{O}(1)\) time for any single swap.
 This can be done in parallel for swaps in disjoint \(2 \times 3\) rectangles, and by repeatedly overlapping the rectangles in different patterns for \(\mathcal{O}(1)\) times we can simulate any single transformation step that disregards the non-swapping constraint in constant time.
 
-As \(\mathcal{O}((n_1 + n_2) \cdot O(1)) = O(n_1 + n_2)\), this implies that for an \(n_1 \times n_2\) workspace there is an efficient algorithm that can always compute a schedule with \(\mathcal{O}(n_1 + n_2)\) makespan. 
+As \(\mathcal{O}((n_1 + n_2) \cdot \mathcal{O}(1)) = \mathcal{O}(n_1 + n_2)\), this implies that for an \(n_1 \times n_2\) workspace there is an efficient algorithm that can always compute a schedule with \(\mathcal{O}(n_1 + n_2)\) makespan. 
 This clearly works even for workspaces with densities of up to 100\%, i.e.~no free vertices available.
 
 % As longer distances would ideally be traversed monotonously moving in the same direction, and not back and forth, continuously transforming \(n_1 \times n_2\) rectangles, \cite{siamcomp/DemaineFKMS19} comes up with the idea of combining Rotatesort with so-called \emph{subflows}. 
