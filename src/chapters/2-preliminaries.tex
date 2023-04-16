@@ -70,15 +70,6 @@ Denote the tuple of a workspace and two configurations \(I \coloneqq \parens{G,\
 	The \emph{minimum makespan motion planning problem} asks to find an \emph{optimal} schedule with respect to the makespan \(M\) for some input problem instance.
 \end{definition}
 
-\begin{remark}
-	The \emph{minimum makespan} for any motion planning problem instance \(I \coloneqq \parens{G,\ \conf{s},\ \conf{t}}\) is bounded below by \(\max(\set{\manhattan{\iconf{s}{r}, \; \iconf{t}{r}}, \; r \in R})\).
-\end{remark}
-
-\begin{definition}
-	Let the aforementioned lower bound to a schedule with makespan \(M\) be denoted by \(L\). 
-	The \(\emph{stretch factor}\) for that schedule is then defined as \(\frac{M}{L}\), which is always at least 1. 
-\end{definition}
-
 \subsection{Some general notation}
 
 \begin{definition}
@@ -87,12 +78,6 @@ Denote the tuple of a workspace and two configurations \(I \coloneqq \parens{G,\
 \end{definition}
 
 % Let \emph{A} be some algorithm. 
-% \fda{\(A\) is said to run in \emph{polynomial time} ... if the execution of \(A\) by a deterministic Turing machine is done in a polynomial number of steps w.r.t.\ the input bit length... (are yyou sure you want do define this? I think is better to assume it is known)}
+% \fda{\(A\) is said to run in \emph{polynomial time} ... if the execution of \(A\) by a deterministic Turing machine is done in a polynomial number of steps w.r.t.\ the input bit length... (are you sure you want do define this? I think is better to assume it is known)}
 % It is \emph{polynomial time} and often said to be \emph{efficient} if the runtime of \emph{A} is bounded by some polynomial function \(T(A) = O(n^c)\) for some constant \(c\).
 
-Let OPT be the optimal (minimum) value of some function \(f\). 
-If some algorithm \(A\) can always find a solution that maps to within a \(\rho\)-factor of the optimal value: \(OPT \leq f(x_A) \leq \rho \cdot OPT\), the algorithm is called a \(\rho\)-approximation algorithm. 
-
-\begin{remark}
-	Stretch factor is a stronger concept than a similar approximation factor: a constant stretch implies a constant approximation factor, but not the other way around.
-\end{remark}

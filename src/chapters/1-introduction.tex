@@ -1,8 +1,8 @@
 \section{Introduction}
 \subsection{Background}
 
-Robotic motion planning is a field of research in theoretical computer science which has been deeply studied.
-It focuses on designing and studying algorithms for making robots get from one point to another safely (without colliding) and efficiently (minimizing some properly defined cost function) \cite{mit/chosetPrinciplesRobotMotion2005}.
+Robotic motion planning is a field of research in theoretical computer science which has been extensively studied.
+It focuses on designing and studying algorithms that get robots from one point to another (without colliding) and efficiently (minimizing some properly defined cost function) \cite{mit/chosetPrinciplesRobotMotion2005}.
 
 Robots are modeled in a vast number of ways, which differ in terms of shapes, sizes and kinematics: some warehouse robots can be modeled to move in two dimensions only, while flying drones can be seen as moving in three dimensions.
 
@@ -12,8 +12,8 @@ Kinematic redundancy increases the fault-tolerance and dexterity of the robot, a
 Kinematic redundancy enables the arm to re-adjust while holding the same end-effector pose, which helps dexterity and fault-tolerance, but also increases complexity in planning, as poses can have different alternative joint configurations \cite{robo/ChiaveriniOM16}.
 
 There are many different environments in which robots exist.
-Assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them.
-Robotic vacuum cleaners on the other hand need to map their environment and make decisions dynamically, as furniture, people and pets can change places from time to time.
+For instance, assembly line robots have a fairly static environment, well defined start and end positions, and a clear and safe path between them.
+Robotic vacuum cleaners need to map their environment and make decisions dynamically, as furniture, people and pets can change places from time to time.
 Some robots need to work together; multi-robot systems can be found in warehouses \cite{robo/ParkerRS16}, where parallel motion is highly desirable, but past research has focused mostly on algorithms moving robots one-by-one \cite{siamcomp/DemaineFKMS19}.
 
 \subsection{Parallel robots}
@@ -64,6 +64,6 @@ The goal of this thesis is to understand and explain the current research in the
 
 In \cref{chapter:main_proof} we prove the computational complexity of low-makespan parallel motion planning by a simplified reduction from one originally constructed in \cite{siamcomp/DemaineFKMS19}.
 This proof shows that the study of approximation algorithms is justified in the field.
-In \cref{chapter:constant_stretch} we take a look at two recent approximation algorithms from \cite{siamcomp/DemaineFKMS19}, which can efficiently compute low-makespan schedules for any problem on a grid.
-Lastly, in \cref{chapter:simultaneous_optimization} we consider four different metrics of optimality, including the makespan, and show that in general, one cannot have a schedule optimizing more than one of them simultaneously.
-This was previously proven to be true on a general graph by \cite{corr/YuL15c}, we extend this proof to hold specifically on the grid.
+In \cref{chapter:constant_stretch} we look at two recent approximation algorithms from \cite{siamcomp/DemaineFKMS19}, which can efficiently compute low-makespan schedules for any problem on a grid.
+Lastly, in \cref{chapter:simultaneous_optimization} we show that one cannot always have a schedule optimizing any pair of the four different cost functions, including the makespan, that we define.
+This was previously proven to be true using non-grid graphs by \cite{corr/YuL15c}, we extend this proof to hold specifically on the grid.

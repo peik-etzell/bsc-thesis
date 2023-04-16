@@ -1,17 +1,24 @@
 
 \section{Conclusions}
-% \fda{develop section as discussed in the meeting}
 
 We have looked at several important aspects of coordinated multi-robot motion planning on the grid:
 
-In \cref{chapter:main_proof} we proved that the decision problem of minimum makespan motion planning is NP-complete using a simplified version of a reduction from \cite{siamcomp/DemaineFKMS19}. 
-The proof uses substantially fewer robots than the original, which should make it easier to grasp. 
-The proof is important in that it shows the value of efficient approximation algorithms in the field of parallel robotics. 
+In \cref{chapter:main_proof} we proved that the decision problem of minimum makespan motion planning is NP-complete using an easier version of a reduction from \cite{siamcomp/DemaineFKMS19}.
+The proof uses substantially fewer robots than the original, which makes it easier to grasp. 
+% The proof is important in that it shows the value of efficient approximation algorithms in the field of parallel robotics. \note{rephrase}
 
-In \cref{chapter:constant_stretch} we took a high-level look at some of the approximation algorithms introduced by \cite{siamcomp/DemaineFKMS19}, which can efficiently compute schedules with constant stretch, implying a guaranteed level of robot performance even in large problem instances.
+In \cref{chapter:constant_stretch} we took a high-level look at some of the approximation algorithms introduced by \cite{siamcomp/DemaineFKMS19}, which can efficiently compute schedules with constant approximation factor, implying a guaranteed level of robot performance even in large problem instances.
 
-Lastly, in \cref{chapter:simultaneous_optimization} we extended a theorem from \cite{corr/YuL15c} from holding on general graphs to also hold specifically on the grid: considering four distinct cost functions, any pairing cannot always be simultaneously optimized.
-The theorem shows the importance of choosing the right cost function when optimizing solutions to motion planning problems. 
+Lastly, in \cref{chapter:simultaneous_optimization} we extended a theorem from \cite{corr/YuL15c} to hold specifically on the grid: considering four distinct cost functions, any pair cannot always be simultaneously optimized.
+This shows that choosing different cost functions to optimize yield different outputs.
 
-Only a small part of the field of coordinated motion planning was covered though. 
-Still left untouched are various different problem formulations, especially motion planning modeled in the continuous space seems central for future research.
+% Only a small part of the field of coordinated motion planning was covered though.
+% There are various different problem formulations that follow the real world closer.
+
+Although the scope of this thesis is limited, it has given insight into the field of coordinated motion planning on a discrete grid.
+More efficient schedules are possible in the continuous case for example, but this domain is harder and less well-understood than the discrete case.
+It is conjectured by \cite{siamcomp/DemaineFKMS19} that the optimal makespan motion planning problem in a continuous model would be harder than the discretely modeled problem. 
+
+Schedules for the discrete space can of course be executed with real robots, assuming that they are sufficiently sparsely positioned to support movements in discrete steps. 
+Thus theoretical work in the discrete space can in many cases be directly transferred to real world implementations.
+

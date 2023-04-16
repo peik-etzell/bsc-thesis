@@ -260,19 +260,20 @@ Compared to the construction in the original proof by \cite{siamcomp/DemaineFKMS
 The number of needed robots is also significantly smaller: \(3n + 4m\) robots compared to \(3n + 3m + 6n(m + 2)\) robots in the original. 
 
 \begin{corollary}
-	The problem of computing a \emph{minimum} makespan schedule for a given problem instance has the same asymptotic runtime as the corresponding decision problem. \note{how did we formulate this?}
+	The problem of computing a \emph{minimum} makespan schedule for a given problem instance is in the same complexity class (i.e.~polynomial, exponential and everything in between) as the corresponding decision problem.
 \end{corollary}
 
 \begin{proof}
-	Assume that there exists an efficient solution to the minimum makespan problem: it would trivially solve the decision problem efficiently. This implies the minimum makespan problem has to be at least as hard as the decision problem. 
+	Assume that there exists an efficient solution to the minimum makespan problem: it would trivially solve the decision problem efficiently.
+	This implies the minimum makespan problem has to be at least as hard as the decision problem.
 
 	
-	Assume instead there exists an algorithm \(A\) that solves the decision problem. 
-	It has runtime \(T(A)\). 
-	\cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \(\mathcal{O}(n_1 + n_2)\). 
-	Thus, repeatedly applying \(A\) for makespans \(\set{1,\ 2,\ \dots,\ \mathcal{O}(n_1 + n_2)}\) would solve the minimum makespan problem within \(\mathcal{O}(T(A) \cdot (n_1 + n_2) )\) time. 
-	This is exponential if \(T(A)\) is exponential, polynomial if \(T(A)\) is polynomial. 
-	Thus the minimum makespan problem is not harder than the decision problem. 
+	Assume instead there exists an algorithm \(A\) that solves the decision problem.
+	It has runtime \(T(A)\).
+	\cite{siamcomp/DemaineFKMS19} shows that the optimal makespan is bounded above by \(\mathcal{O}(n_1 + n_2)\).
+	Thus, repeatedly applying \(A\) for makespans \(\set{1,\ 2,\ \dots,\ \mathcal{O}(n_1 + n_2)}\) would solve the minimum makespan problem within \(\mathcal{O}(T(A) \cdot (n_1 + n_2) )\) time.
+	This is exponential if \(T(A)\) is exponential, polynomial if \(T(A)\) is polynomial.
+	Thus the minimum makespan problem is not harder than the decision problem.
 
 	This proves the minimum makespan problem has the same asymptotic runtime as the decision problem, assuming 
 \end{proof} 

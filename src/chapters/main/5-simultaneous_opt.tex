@@ -14,12 +14,13 @@ Then consider the following well-defined cost functions:
 
 % \cite{corr/YuL15c} examines all four of these on a general graph, i.e.~not contrained to model a grid like in our case. An important finding is proving the decision problem statements for the respective optimization problems of the cost functions above are all NP-complete on a general graph. This importantly does \emph{not} imply the same holds for the grid case of coordinated robot motion planning, and the reduction they use is not easily convertible to the grid. It seems currently unknown if the respective decision problems to these metrics are also NP-complete on the grid similar to \cref{thm:npc}.
 
-\cite{corr/YuL15c} finds that for a robot motion planning problem on a \emph{general} graph, one cannot always find schedules that optimize any pair of the above cost functions simultaneously:
+\cite{corr/YuL15c} finds that one can construct non-grid motion planning problem instances for any pair of the above cost functions such that they cannot be optimized simultaneously:
+% a robot motion planning problem on a \emph{general} graph, one cannot always find schedules that optimize any pair of the above cost functions simultaneously:
 \begin{align}\label{eq:simultaneous_emptyset}
 	\forall \parens{f_1,\ f_2} \in \set{\mono{M, TAT, TD, MD}}^2 : \exists I : \schedules_{\text{opt}_{f_1}} \cap \schedules_{\text{opt}_{f_2}} = \emptyset,
 \end{align}
 where \(\schedules_{\text{opt}_f} \subseteq \schedules\) denotes the set of optimal schedules for an instance \(I\) with respect to some cost function \(f\).
-That \cref{eq:simultaneous_emptyset} is true on a general graph does not imply that it holds for our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model.
+That \cref{eq:simultaneous_emptyset} is true when allowing general graphs does not imply that it holds when constrained to our problem formulation on a grid, and the graphs used in the proof are not compatible with our grid-model.
 However, by coming up with new grid-specific problem instances we prove the statement holds on the grid as well.
 
 \begin{lemma}\label{lemma:simultaneous_pairings_1}
@@ -37,8 +38,8 @@ However, by coming up with new grid-specific problem instances we prove the stat
 		\label{fig:simultaneous_problem_1}
 	\end{figure}
 
-	Observe the configuration in \cref{fig:simultaneous_problem_1}. 
-	It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total travel time and distance instead.
+	Observe the instance in \cref{fig:simultaneous_problem_1}. 
+	It is easy to see that there are two different ways to schedule a solution: either sacrifice maximum time and distance by letting the single robot move around the two central ones, or alternatively let the middle robots move out of the way, sacrificing the total arrival time and distance instead.
 	See \cref{fig:simumtaneous_strategies_1} for a visual of this.
 
 	% FIGURE SIMULTANEOUS 1 STRATEGIES
@@ -51,7 +52,7 @@ However, by coming up with new grid-specific problem instances we prove the stat
 		\label{fig:simumtaneous_strategies_1}
 	\end{figure}
 
-It is quite trivial to conclude that there are no better solutions to this instance w.r.t. these metrics.
+It is quite trivial to reason that there are no better solutions to this instance w.r.t.~these metrics.
 This implies one cannot always optimize simultaneously for any pairing in \(\set{\mono{M, MD}} \times \set{\mono{TAT, TD}}\) on the grid.
 \end{proof}
 
