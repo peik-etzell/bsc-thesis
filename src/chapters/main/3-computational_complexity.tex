@@ -228,8 +228,11 @@ Let a decision problem formulation of minimum makespan motion planning be as fol
 	The purely vertical negative offset \(\phi\) when \(C_i\) is all-negative results in \(l_{i,k}\) going from `colliding' with a \false\ \(r_{j_k}\) to `colliding' when \(r_{j_k} = \true\). 
 	All literal robots \(l_{i,k}\) and the clause robot \(c_i\) that correspond to clause \(C_i\) get this same offset, so their relative timings are unaffected.
 	
-	The only thing left is determining the critical makespan \(M\): all literal robots have to fit in between the left and right auxiliary-robots, while all variable robots should fit in the span of all the literal robots, with some room to spare for the lowest clause robot \(c_m\).
-
+	The only thing left is determining the critical makespan \(M\).
+	Horizontally, the variable robots have to span the rightmost literal robot, with space for the auxiliary robots.
+	Vertically, the lowest literal robot has to have room for all variable robots and its corresponding clause robot.
+	Thus, \(M\) can be fixed as follows:
+	% The only thing left is determining the critical makespan \(M\): all literal robots have to fit in between the left and right auxiliary-robots, while all variable robots should fit in the span of all the literal robots, with some room to spare for the lowest clause robot \(c_m\).
 	\begin{align*}
 		& M = \max \parens{
 			\underbrace{3nm + 2n + 1}_{
