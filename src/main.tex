@@ -22,7 +22,7 @@
 \thesistitle{Motion planning for parallel robots on a grid: An overview}
 \place{Espoo}
 \date{\today}
-\supervisor{University Lecturer  \ Henrik Wallén}
+\supervisor{Professor \ Eero Hyvönen}
 \advisor{Postdoctoral researcher \ Francesco d'Amore}
 \uselogo{aaltoRed}{''}
 
@@ -76,18 +76,23 @@ Overall, this thesis provides valuable insights into the field of coordinated mo
 
 %% SWEDISH ABSTRACT.
 \thesistitle{Rörelseplanering för parallella robotar i ett rutnät: en översikt}
-\supervisor{Universitetslektor \ Henrik Wallén}
 \advisor{Postdoktoral forskare \ Francesco d'Amore}
 \degreeprogram{Datateknik}
 \major{Datateknik}
 \keywords{tidsspann, avstånd, optimering, diskret, NP-komplett, komplexitet}
 \begin{abstractpage}[swedish]
 Denna avhandling undersöker koordinerad rörelseplanering av flera robotar i ett diskret rutnät.
-Vi utforskar först problemet av att räkna ut en rörelseplan med minsta möjliga tidsspann, och visar att dess formulering som beslutsproblem är NP-komplett genom en förenklad reduktion av Demaine et al.
-Sedan ges en översikt över två approximationsalgoritmer som effektivt kan beräkna rörelseplaner med en garanterad nivå av robotprestanda.
-Slutligen utvidgar vi ett tidigare teorem av Yu och LaValle för att gälla specifikt på ett rutnät, vilket visar att optimering av olika kostnadsfunktioner ger olika rörelseplaner som resultat.
-Även om avhandlingen har ett begränsat fokus på den diskreta modellen av problemet, erkänner vi att mer effektiva rörelseplaner är möjliga med en kontinuerlig modell, men det området är dock mindre väl förstått.
-Avhandlingen ger värdefulla insikter inom koordinerad rörelseplanering på ett rutnät, och banar väg för framtida forskning inom området.
+Koordinerad rörelseplanering behövs för att förflytta flera robotar till sina respektive mål på ett effektivt och säkert sätt.
+Problemet är inte trivialt, vilket oundvikligen resulterar i en kompromiss mellan tid spenderad på planering och tid spenderad på utförandet av planen.
+Vi utforskar först problemet att räkna ut en rörelseplan med minsta möjliga tidsspann, och visar att dess formulering som beslutsproblem är NP-svårt genom en förenklad reduktion av Demaine et al.
+Reduktionen är enkelt sett en effektiv simulering av ett känt problem genom en uppställning som ett rörelseplaneringsproblem, vilket visar att rörelseplaneringsproblemet är minst lika svårt som det ursprungliga problemet.
+Svårigheten av optimal rörelseplanering kräver algoritmer som snabbt kan räkna ut planer som är någorlunda bra.
+Därför ges en översikt över två approximationsalgoritmer av Demaine et al. som effektivt kan beräkna rörelseplaner med en garanterad nivå av robotprestanda.
+Algoritmerna fungerar även om varje ruta vore upptagen av robotar.
+Slutligen utvidgas ett tidigare teorem av Yu och LaValle för att gälla specifikt på ett rutnät, inget par av de fyra kostnadsfunktioner som tas upp kan nämligen optimeras samtidigt. Detta visar att optimering av olika kostnadsfunktioner ger olika rörelseplaner som resultat, vilket understryker tyngden av valet av kostnadsfunktion inom rörelseplanering.
+Att optimera för ett litet tidsspann under utförandet verkar som ett klokt val med tanke på till exempel varuhusscenarier: det ger planer definitiva start och sluttillstånd, vilket förenklar parallelliseringen av rörelseplaneringen av påföljande transformationer.
+Även om avhandlingen har ett begränsat fokus på den diskreta modellen av problemet, kan det medges att mer effektiva rörelseplaner är möjliga med en kontinuerlig modell, men det området är dock mindre väl förstått.
+Avhandlingen ger värdefulla insikter inom koordinerad rörelseplanering på ett rutnät och banar väg för framtida forskning inom området.
 \end{abstractpage}
 
 
